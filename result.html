@@ -6,39 +6,24 @@
     <title>MBTI 결과</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .result-emoji { font-size: 80px; margin: 20px 0 10px; }
-        .result-type { font-size: 48px; font-weight: 900; margin-bottom: 4px; }
-        .result-name { font-size: 22px; font-weight: 700; color: #444; margin-bottom: 16px; }
-        .result-desc { font-size: 15px; color: #555; line-height: 1.8; margin-bottom: 20px; background: #f8f0ff; padding: 16px; border-radius: 14px; }
-        .result-section { background: #fff; border: 2px solid #ede0ff; border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; text-align: left; }
-        .result-section h3 { font-size: 16px; margin-bottom: 10px; color: #333; }
-        .result-list { padding-left: 0; list-style: none; margin: 0; }
-        .result-list li { padding: 6px 0; font-size: 14px; color: #555; border-bottom: 1px solid #f0e8ff; }
-        .result-list li:last-child { border-bottom: none; }
-        .section-text { font-size: 14px; color: #555; line-height: 1.7; margin: 0; }
-        .famous-text { font-size: 15px; color: #764ba2; font-weight: 700; margin: 0; }
-        .compat { display: flex; gap: 10px; margin-bottom: 16px; }
-        .compat-item { flex: 1; border-radius: 14px; padding: 14px; text-align: center; }
-        .compat-item.good { background: #e8f8e8; }
-        .compat-item.bad { background: #ffe8e8; }
-        .compat-item span { display: block; font-size: 12px; color: #888; margin-bottom: 6px; }
-        .compat-item strong { font-size: 16px; font-weight: 800; }
-        .product-section { background: linear-gradient(135deg, #667eea15, #764ba215); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
-        .product-section h3 { font-size: 18px; margin-bottom: 6px; color: #333; }
-        .product-sub { font-size: 13px; color: #888; margin-bottom: 14px; }
-        .product-card { display: flex; align-items: center; gap: 12px; background: white; border-radius: 14px; padding: 14px; margin-bottom: 10px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
-        .product-card:hover { transform: scale(1.02); }
-        .product-emoji { font-size: 32px; min-width: 40px; text-align: center; }
-        .product-info { flex: 1; text-align: left; }
-        .product-info strong { display: block; font-size: 15px; color: #333; margin-bottom: 3px; }
-        .product-info span { font-size: 13px; color: #888; }
-        .product-arrow { font-size: 20px; color: #764ba2; font-weight: bold; }
-        .coupang-notice { font-size: 11px; color: #aaa; margin-top: 10px; text-align: center; }
-        .share-section { background: #fff9e6; border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-        .share-section h3 { font-size: 16px; margin-bottom: 6px; color: #333; }
-        .share-sub { font-size: 13px; color: #888; margin-bottom: 12px; }
-        .share-btn { border: none; border-radius: 50px; padding: 14px 20px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; background: #FEE500; color: #333; }
-        .btn-retry { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 50px; padding: 16px; font-size: 17px; font-weight: 800; width: 100%; cursor: pointer; margin-top: 8px; margin-bottom: 30px; }
+    /* 퍼센트 바 */
+    .percent-section { background:#f8f0ff; border-radius:16px; padding:20px; margin-bottom:20px; }
+    .percent-section h3 { font-size:17px; margin-bottom:16px; color:#444; text-align:center; }
+    .percent-row { margin-bottom:14px; }
+    .percent-labels { display:flex; justify-content:space-between; margin-bottom:4px; }
+    .percent-label-left { font-size:13px; font-weight:700; color:#764ba2; }
+    .percent-label-right { font-size:13px; font-weight:700; color:#aaa; }
+    .percent-bar-wrap { background:#e8e0f0; border-radius:10px; height:14px; overflow:hidden; }
+    .percent-bar-fill { height:14px; border-radius:10px; background:linear-gradient(135deg,#667eea,#764ba2); transition:width 1s ease; }
+    /* 결과 섹션 */
+    .result-section { background:#f8f0ff; border-radius:14px; padding:16px 20px; margin-bottom:16px; text-align:left; }
+    .result-section h3 { font-size:16px; margin-bottom:10px; color:#444; }
+    .result-list { padding-left:0; list-style:none; }
+    .result-list li { padding:6px 0; font-size:14px; color:#555; border-bottom:1px solid #ede0ff; }
+    .result-list li:last-child { border-bottom:none; }
+    .section-text { font-size:14px; color:#555; line-height:1.7; margin:0; }
+    .famous-text { font-size:15px; color:#764ba2; font-weight:600; margin:0; }
+    .share-sub { color:#888; font-size:13px; margin-bottom:12px; }
     </style>
 </head>
 <body>
@@ -49,6 +34,7 @@
     </div>
 
     <script>
+    // 쿠팡 링크
     const links = {
         선풍기: "https://link.coupang.com/a/e6pbm4Zb08",
         선크림: "https://link.coupang.com/a/e6pphuCkX6",
@@ -67,253 +53,280 @@
         쿨링스프레이: "https://link.coupang.com/a/e6yaSBkLZY"
     };
 
+    // MBTI 데이터
     const mbtiData = {
         "INTJ": {
             emoji:"🔭", name:"전략가", color:"#4a90d9",
-            desc:"냉철한 두뇌와 강한 의지를 가진 전략가! 목표를 세우면 반드시 이루는 유형으로, 전체 인구의 약 2%만 존재하는 희귀한 유형이에요. 독립적이고 분석적이며, 겉으로는 차갑게 보이지만 내면에는 깊은 열정이 숨겨져 있어요.",
-            strength:["📌 장기적 목표 설정과 실행력이 뛰어남","🧠 복잡한 문제를 논리적으로 분석","💪 어떤 상황에서도 흔들리지 않는 의지력","📚 끊임없이 자기계발에 투자"],
-            weakness:["😔 감정 표현이 서툴고 타인에게 냉정하게 보임","🤝 타협을 싫어하고 완벽주의 성향","🙈 자신의 실수를 인정하기 어려워함"],
-            love:"연애에서도 계획적이고 신중해요. 감정보다는 이성으로 상대를 파악하며, 한 번 마음을 열면 매우 헌신적인 파트너가 됩니다.",
-            career:"전략 컨설턴트, 데이터 분석가, 연구원, 엔지니어, CEO",
-            famous:"일론 머스크, 마크 저커버그, 크리스토퍼 놀란",
+            desc:"독립적이고 분석적인 완벽주의자! 계획을 세우고 목표를 향해 나아가는 것을 즐겨요.",
+            strength:["뛰어난 전략적 사고","높은 집중력과 추진력","독립적으로 문제 해결","창의적이고 혁신적"],
+            weakness:["감정 표현이 서툴러요","완벽주의로 스트레스 많음","타인 의견 무시할 수 있음","혼자만의 세계에 빠짐"],
+            love:"연애에서도 전략적! 감정보다 논리를 앞세우지만 한번 마음을 열면 깊은 사랑을 해요.",
+            career:"과학자, 개발자, 전략기획자, 투자분석가, 건축가",
+            famous:"일론 머스크, 마크 저커버그, 니체",
             good:["ENTP","ENFP"], bad:["ESFP","ESFJ"],
             products:[
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"어디서든 시원하게! 집중력 UP", url:links.선풍기, emoji:"🌬️"},
-                {name:"🧴 자외선 차단 선크림", desc:"외출 전 필수! UV 완벽 차단", url:links.선크림, emoji:"🧴"},
-                {name:"🥤 아이스 텀블러", desc:"차가운 음료를 오래 유지", url:links.텀블러, emoji:"🥤"}
+                {name:"🌬️ 휴대용 미니 선풍기", desc:"혼자 집중할 때 시원하게!", url:links.선풍기},
+                {name:"🧴 자외선 차단 선크림", desc:"외출할 때 필수 아이템", url:links.선크림},
+                {name:"🥤 아이스 텀블러", desc:"차가운 음료 오래 유지", url:links.텀블러}
             ]
         },
         "INTP": {
-            emoji:"🔬", name:"논리술사", color:"#5b9bd5",
-            desc:"지식을 탐구하는 것을 삶의 목적으로 삼는 유형! 세상의 모든 것에 '왜?'라는 질문을 던지며, 복잡한 이론과 아이디어를 다루는 것을 즐깁니다. 혼자만의 시간을 통해 에너지를 충전하는 내향형 사색가예요.",
-            strength:["🧩 창의적이고 독창적인 사고방식","📊 객관적이고 논리적인 분석 능력","💡 새로운 아이디어와 이론 탐구","🎯 문제의 핵심을 꿰뚫는 통찰력"],
-            weakness:["⏰ 실행력이 부족하고 미루는 경향","😶 감정 표현이 어색하고 사회적 상호작용 불편","🌀 너무 많은 생각에 결정장애 발생"],
-            love:"연애에서는 지적 자극을 중요시해요. 대화로 통하는 파트너를 원하며, 감정보다 아이디어를 공유하는 것을 더 좋아합니다.",
-            career:"소프트웨어 개발자, 수학자, 철학자, 과학자, 게임 디자이너",
-            famous:"알버트 아인슈타인, 빌 게이츠, 래리 페이지",
-            good:["ENTJ","ESTJ"], bad:["ESFJ","ISFJ"],
+            emoji:"🔬", name:"논리술사", color:"#5b8dd9",
+            desc:"호기심 많은 사색가! 복잡한 문제를 분석하고 해결하는 것을 즐겨요.",
+            strength:["논리적 분석력이 뛰어남","창의적 아이디어 풍부","객관적 사고","다양한 분야 지식"],
+            weakness:["우유부단할 수 있어요","감정 공감이 부족함","현실 감각이 떨어질 수 있음","마무리가 약해요"],
+            love:"연애보다 지적 교감을 중요시해요. 대화가 통하는 사람에게 깊이 빠져들어요.",
+            career:"프로그래머, 철학자, 수학자, 연구원, 작가",
+            famous:"아인슈타인, 빌 게이츠, 다윈",
+            good:["ENTJ","ESTJ"], bad:["ESFJ","ENFJ"],
             products:[
-                {name:"❄️ 냉감 쿨매트", desc:"더운 여름 쾌적한 집중 환경 조성", url:links.쿨매트, emoji:"❄️"},
-                {name:"🌬️ 미니 에어컨/냉풍기", desc:"책상 위 개인 냉방 아이템", url:links.냉풍기, emoji:"🌬️"},
-                {name:"🎵 방수 블루투스 스피커", desc:"집중할 때 배경음악 필수템", url:links.스피커, emoji:"🎵"}
+                {name:"🌬️ 휴대용 미니 선풍기", desc:"집중할 때 시원하게!", url:links.선풍기},
+                {name:"🥤 아이스 텀블러", desc:"공부할 때 시원한 음료와 함께", url:links.텀블러},
+                {name:"❄️ 냉감 쿨매트", desc:"더운 여름 시원하게 앉아서 공부", url:links.쿨매트}
             ]
         },
         "ENTJ": {
-            emoji:"👑", name:"통솔자", color:"#c0392b",
-            desc:"타고난 리더십으로 조직을 이끄는 유형! 목표 달성을 위해 어떤 장애물도 돌파하는 강한 의지를 지녔어요. 효율성을 최우선으로 생각하며, 주변 사람들에게 영감을 주는 카리스마 있는 리더입니다.",
-            strength:["🚀 강력한 리더십과 추진력","📈 전략적 사고와 큰 그림 보는 능력","💼 어떤 환경에서도 목표 달성","🗣️ 탁월한 설득력과 커뮤니케이션"],
-            weakness:["😤 독단적이고 타인의 의견을 무시하는 경향","⚡ 참을성이 부족하고 성급함","🤯 지나친 완벽주의로 스트레스"],
-            love:"연애에서도 리더십을 발휘해요. 강하고 독립적인 파트너를 좋아하며, 함께 성장하고 발전하는 관계를 원합니다.",
-            career:"CEO, 변호사, 정치인, 경영 컨설턴트, 군 장교",
-            famous:"스티브 잡스, 나폴레옹, 고든 램지",
-            good:["INTP","INFP"], bad:["ISFP","INFP"],
+            emoji:"👑", name:"통솔자", color:"#e74c3c",
+            desc:"타고난 리더! 목표를 향해 돌진하며 주변 사람들을 이끄는 카리스마가 넘쳐요.",
+            strength:["강력한 리더십","빠른 의사결정","목표 지향적","높은 추진력"],
+            weakness:["고집이 강해요","타인 감정 배려 부족","너무 직선적","완벽주의 성향"],
+            love:"연애도 목표처럼 추진해요! 적극적으로 다가가지만 상대방의 감정을 놓칠 수 있어요.",
+            career:"CEO, 변호사, 정치인, 컨설턴트, 군인",
+            famous:"스티브 잡스, 나폴레옹, 마가렛 대처",
+            good:["INTP","ISTP"], bad:["INFP","ISFP"],
             products:[
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"바쁜 일정 중 빠른 쿨링", url:links.선풍기, emoji:"🌬️"},
-                {name:"🧴 자외선 차단 선크림", desc:"야외 미팅도 완벽하게", url:links.선크림, emoji:"🧴"},
-                {name:"🧊 아이스 텀블러", desc:"에너지 드링크를 시원하게", url:links.텀블러, emoji:"🧊"}
+                {name:"💦 물놀이 튜브", desc:"리더답게 물놀이도 화끈하게!", url:links.튜브},
+                {name:"🔊 방수 블루투스 스피커", desc:"어디서든 분위기 메이커", url:links.스피커},
+                {name:"🥤 아이스 텀블러", desc:"바쁜 일정 속 시원함 유지", url:links.텀블러}
             ]
         },
         "ENTP": {
             emoji:"💡", name:"변론가", color:"#e67e22",
-            desc:"지적 도전을 즐기는 혁신가! 기존의 틀을 깨고 새로운 가능성을 탐구하는 것을 좋아해요. 어떤 주제에서도 상대방과 논쟁을 즐기며, 뛰어난 임기응변으로 어떤 상황도 유리하게 바꿀 수 있습니다.",
-            strength:["💬 뛰어난 언변과 순발력","🌐 다양한 분야에 폭넓은 지식","🔥 새로운 프로젝트에 대한 열정","🎭 유머 감각이 넘치는 사교성"],
-            weakness:["📌 끝맺음이 약하고 중간에 흥미를 잃음","🥊 논쟁을 즐겨 상대에게 상처 줄 수 있음","📋 루틴과 규칙을 싫어함"],
-            love:"연애에서 지적으로 자극하는 상대를 원해요. 새로운 경험을 함께 즐기고, 서로 성장하는 관계를 원합니다.",
-            career:"기업가, 변호사, 크리에이터, 마케터, 발명가",
-            famous:"토마스 에디슨, 벤저민 프랭클린, 마크 트웨인",
-            good:["INTJ","INFJ"], bad:["ISFJ","ESTJ"],
+            desc:"아이디어가 넘치는 토론왕! 새로운 것에 도전하고 기존의 틀을 깨는 것을 즐겨요.",
+            strength:["창의적 아이디어","뛰어난 토론 능력","빠른 적응력","다재다능"],
+            weakness:["끈기가 부족해요","논쟁을 즐겨 갈등 유발","집중력이 산만함","계획 실행이 약함"],
+            love:"연애도 토론처럼! 지적 자극을 주는 파트너에게 끌리고 새로운 경험을 함께 하고 싶어해요.",
+            career:"기업가, 마케터, 발명가, 코미디언, 컨설턴트",
+            famous:"토마스 에디슨, 벤저민 프랭클린, 로버트 다우니 주니어",
+            good:["INTJ","INFJ"], bad:["ISFJ","ISTJ"],
             products:[
-                {name:"🎵 방수 블루투스 스피커", desc:"야외 모임에서 분위기 메이커", url:links.스피커, emoji:"🎵"},
-                {name:"🌊 물놀이 튜브", desc:"재미있는 여름 물놀이 필수템", url:links.튜브, emoji:"🌊"},
-                {name:"🏕️ 캠핑 돗자리", desc:"어디서든 편하게 자유롭게", url:links.돗자리, emoji:"🏕️"}
+                {name:"🔊 방수 블루투스 스피커", desc:"어디서든 신나게!", url:links.스피커},
+                {name:"💦 물놀이 튜브", desc:"여름 물놀이 도전!", url:links.튜브},
+                {name:"👟 아쿠아슈즈", desc:"액티브한 여름 활동에 필수", url:links.아쿠아슈즈}
             ]
         },
         "INFJ": {
             emoji:"🌙", name:"옹호자", color:"#8e44ad",
-            desc:"타인의 감정을 깊이 이해하는 신비로운 유형! 전 세계에서 가장 희귀한 MBTI 유형(약 1~2%)으로, 직관력과 공감 능력이 매우 뛰어납니다. 이상주의적이면서도 현실적인 목표를 세워 세상을 더 좋은 곳으로 만들고 싶어해요.",
-            strength:["🔮 뛰어난 직관력과 통찰력","❤️ 깊은 공감 능력과 타인 이해","✍️ 창의적인 표현 능력","🌱 강한 도덕적 신념"],
-            weakness:["😮‍💨 완벽주의로 인한 번아웃","🚪 사생활을 중요시해 마음 열기 어려움","🌊 타인의 감정에 너무 영향 받음"],
-            love:"깊고 의미 있는 관계를 원해요. 표면적인 관계보다는 영혼까지 통하는 진정한 연결을 추구합니다.",
-            career:"심리상담사, 작가, 예술가, 사회복지사, 의사",
-            famous:"넬슨 만델라, 마틴 루터 킹, 테일러 스위프트",
-            good:["ENTP","ENFP"], bad:["ESTP","ISTP"],
+            desc:"통찰력 있는 이상주의자! 타인을 깊이 이해하고 세상을 더 나은 곳으로 만들고 싶어해요.",
+            strength:["깊은 통찰력","강한 공감 능력","창의적 비전","진정성 있는 관계"],
+            weakness:["완벽주의로 번아웃","비판에 상처받음","혼자 고민을 삼킴","현실과 이상의 괴리"],
+            love:"깊고 의미있는 사랑을 원해요. 영혼의 단짝을 찾고 있으며 표면적 관계엔 관심 없어요.",
+            career:"상담사, 작가, 심리학자, 사회운동가, 교사",
+            famous:"간디, 마틴 루터 킹, 테일러 스위프트",
+            good:["ENTP","ENFP"], bad:["ESTP","ESFP"],
             products:[
-                {name:"🧴 자외선 차단 선크림", desc:"피부 보호로 마음도 편안하게", url:links.선크림, emoji:"🧴"},
-                {name:"🌿 쿨링 마스크팩", desc:"지친 피부 회복, 나를 위한 케어", url:links.마스크팩, emoji:"🌿"},
-                {name:"☂️ 자외선 차단 양산", desc:"감성적인 여름 나들이 필수템", url:links.양산, emoji:"☂️"}
+                {name:"🧴 쿨링 마스크팩", desc:"지친 하루 피부 케어로 힐링", url:links.마스크팩},
+                {name:"☂️ 자외선 차단 양산", desc:"감성적인 여름 외출 필수품", url:links.양산},
+                {name:"🧴 자외선 차단 선크림", desc:"소중한 피부 지키기", url:links.선크림}
             ]
         },
         "INFP": {
-            emoji:"🌈", name:"중재자", color:"#27ae60",
-            desc:"내면의 세계가 풍부한 몽상가! 깊은 감수성과 창의성을 지닌 유형으로, 자신만의 가치관과 신념에 따라 살아가요. 겉으로는 조용해 보이지만 내면에는 뜨거운 열정과 풍부한 상상력이 넘쳐흐릅니다.",
-            strength:["🎨 뛰어난 창의성과 상상력","💝 진심 어린 공감 능력","🌟 강한 개인적 가치관","✨ 아름다움을 발견하는 심미안"],
-            weakness:["☁️ 현실적인 문제 처리에 어려움","💔 비판에 매우 민감하게 반응","⏳ 마감 기한과 의무 이행에 약함"],
-            love:"낭만적이고 이상적인 사랑을 꿈꿔요. 상대방의 내면을 사랑하며, 깊은 감정적 유대감을 원합니다.",
-            career:"작가, 시인, 그래픽 디자이너, 음악가, 상담사",
-            famous:"윌리엄 셰익스피어, 오드리 헵번, 조니 뎁",
-            good:["ENFJ","ENTJ"], bad:["ESTJ","ESTP"],
+            emoji:"🌸", name:"중재자", color:"#e91e8c",
+            desc:"감성적인 몽상가! 자신만의 가치관과 이상을 소중히 여기며 진정한 자아를 찾아가요.",
+            strength:["풍부한 감수성","강한 공감 능력","창의적 표현력","진실한 관계 추구"],
+            weakness:["현실 감각 부족","우유부단함","혼자 상처받음","비판에 예민함"],
+            love:"로맨틱한 사랑을 꿈꿔요. 감정적 교감이 가장 중요하며 진심을 나눌 수 있는 관계를 원해요.",
+            career:"작가, 시인, 디자이너, 상담사, 예술가",
+            famous:"윌리엄 셰익스피어, 조니 뎁, 아이유",
+            good:["ENFJ","ENTJ"], bad:["ESTJ","ESFJ"],
             products:[
-                {name:"🌿 쿨링 마스크팩", desc:"감성 충전 셀프 케어 타임", url:links.마스크팩, emoji:"🌿"},
-                {name:"☂️ 자외선 차단 양산", desc:"낭만적인 여름 산책 필수템", url:links.양산, emoji:"☂️"},
-                {name:"💧 쿨링 스프레이", desc:"더운 날 청량감 한 스프레이", url:links.쿨링스프레이, emoji:"💧"}
+                {name:"🧴 쿨링 마스크팩", desc:"감성 충전 셀프케어 시간", url:links.마스크팩},
+                {name:"☂️ 자외선 차단 양산", desc:"감성 여름 산책 필수템", url:links.양산},
+                {name:"🌬️ 휴대용 미니 선풍기", desc:"더운 여름도 감성있게", url:links.선풍기}
             ]
         },
         "ENFJ": {
-            emoji:"🌟", name:"선도자", color:"#f39c12",
-            desc:"사람들에게 영감을 주는 카리스마 넘치는 리더! 타인의 성장과 행복을 위해 헌신하는 유형으로, 타고난 공감 능력으로 주변 사람들을 하나로 모으는 능력이 탁월합니다. 세상을 더 나은 곳으로 만들고 싶은 열망을 갖고 있어요.",
-            strength:["🌍 타인을 이끄는 자연스러운 리더십","💞 깊은 공감 능력과 사람 이해","🗣️ 탁월한 소통 능력","🎯 목표를 향한 강한 동기부여"],
-            weakness:["😓 타인의 기대에 부응하려다 자신을 잃음","🎭 갈등을 피하려 감정을 숨김","🔋 에너지 소진이 빠름"],
-            love:"헌신적이고 따뜻한 파트너예요. 연인의 성장을 돕고 싶어하며, 깊은 감정적 연결을 소중히 여깁니다.",
-            career:"교사, 상담사, HR 전문가, 코치, 영업 관리자",
-            famous:"오프라 윈프리, 버락 오바마, 엠마 스톤",
+            emoji:"🌟", name:"선도자", color:"#27ae60",
+            desc:"카리스마 넘치는 리더! 사람들에게 영감을 주고 함께 성장하는 것을 즐겨요.",
+            strength:["뛰어난 소통 능력","강한 공감력","사람들을 이끄는 능력","열정적"],
+            weakness:["타인 의견에 지나치게 신경씀","자신을 희생하는 경향","스트레스를 잘 받음","완벽주의"],
+            love:"헌신적인 사랑을 해요. 파트너를 위해 모든 것을 쏟아붓는 스타일이에요.",
+            career:"교사, 코치, 배우, 홍보담당자, 사회복지사",
+            famous:"오바마, 오프라 윈프리, 방탄소년단 RM",
             good:["INFP","ISFP"], bad:["ISTP","INTP"],
             products:[
-                {name:"☂️ 자외선 차단 양산", desc:"야외 활동 많은 선도자의 필수템", url:links.양산, emoji:"☂️"},
-                {name:"🎵 방수 블루투스 스피커", desc:"모임에서 분위기를 이끄는 아이템", url:links.스피커, emoji:"🎵"},
-                {name:"🧴 자외선 차단 선크림", desc:"활발한 야외 활동 피부 보호", url:links.선크림, emoji:"🧴"}
+                {name:"🔊 방수 블루투스 스피커", desc:"친구들과 여름 파티 필수!", url:links.스피커},
+                {name:"💦 물놀이 튜브", desc:"모두와 함께하는 물놀이", url:links.튜브},
+                {name:"🧊 보냉 가방", desc:"모임에 음식 챙겨가기 필수", url:links.보냉가방}
             ]
         },
         "ENFP": {
-            emoji:"🦋", name:"활동가", color:"#e74c3c",
-            desc:"열정과 창의성이 넘치는 자유로운 영혼! 새로운 가능성을 항상 탐구하며, 사람들과 깊고 진실된 관계를 맺는 것을 즐겨요. 어디서든 주변 사람들에게 에너지와 영감을 불어넣는 분위기 메이커입니다.",
-            strength:["🎉 전염성 있는 열정과 긍정 에너지","💡 창의적이고 혁신적인 아이디어","🤗 사람들과 빠르게 친해지는 능력","🌈 다양한 관심사와 폭넓은 시야"],
-            weakness:["🎯 집중력 유지와 마무리에 약함","😱 비판에 민감하고 확인 욕구 강함","⏰ 시간 관리와 계획 실행에 어려움"],
-            love:"열정적이고 낭만적인 연애를 해요. 파트너와 함께 새로운 경험을 탐험하며 서로 성장하는 관계를 꿈꿉니다.",
-            career:"기자, 배우, 상담사, 크리에이터, 마케터",
-            famous:"로빈 윌리엄스, 엘렌 드제너러스, 페기 카터",
+            emoji:"🦋", name:"활동가", color:"#f39c12",
+            desc:"열정적인 자유로운 영혼! 새로운 가능성을 탐색하고 사람들과 연결되는 것을 즐겨요.",
+            strength:["뛰어난 창의력","강한 열정","사람 사귀기 좋아함","긍정적 에너지"],
+            weakness:["집중력 부족","감정 기복이 있음","계획 실행이 약함","쉽게 지루함을 느낌"],
+            love:"설레는 감정을 중요시해요! 로맨틱하고 열정적인 사랑을 원하며 새로운 경험을 함께 하고 싶어해요.",
+            career:"방송인, 마케터, 배우, 코치, 기업가",
+            famous:"로빈 윌리엄스, 윌 스미스, 제니퍼 애니스톤",
             good:["INTJ","INFJ"], bad:["ISTJ","ISFJ"],
             products:[
-                {name:"🌊 물놀이 튜브", desc:"신나는 여름 물놀이 파티 필수!", url:links.튜브, emoji:"🌊"},
-                {name:"🎵 방수 블루투스 스피커", desc:"어디서든 파티 분위기 UP!", url:links.스피커, emoji:"🎵"},
-                {name:"👟 아쿠아슈즈", desc:"물놀이 완벽 마무리 아이템", url:links.아쿠아슈즈, emoji:"👟"}
+                {name:"💦 물놀이 튜브", desc:"여름 물놀이 최고!", url:links.튜브},
+                {name:"🔊 방수 블루투스 스피커", desc:"신나는 여름 필수템", url:links.스피커},
+                {name:"🌬️ 휴대용 미니 선풍기", desc:"활동적인 여름을 시원하게", url:links.선풍기}
             ]
         },
         "ISTJ": {
-            emoji:"🏛️", name:"현실주의자", color:"#2c3e50",
-            desc:"책임감과 신뢰성의 상징! 한 번 맡은 일은 반드시 끝내는 성실함으로, 조직의 기둥 역할을 하는 유형이에요. 전통과 규칙을 중시하며, 사실에 근거한 판단으로 신중하게 행동합니다.",
-            strength:["📋 철저한 책임감과 신뢰성","🔍 꼼꼼하고 세밀한 업무 처리","📅 뛰어난 계획 수립과 실행","🏆 어떤 상황도 흔들리지 않는 안정감"],
-            weakness:["🔒 변화에 저항하고 유연성 부족","😐 감정 표현이 서툴고 딱딱하게 보임","📌 너무 원칙적이어서 융통성 없음"],
-            love:"안정적이고 신뢰 있는 관계를 원해요. 감정 표현보다는 행동으로 사랑을 표현하며, 한 번 선택한 파트너에게 끝까지 헌신합니다.",
-            career:"회계사, 군인, 법률가, 행정관, 엔지니어",
-            famous:"조지 워싱턴, 워렌 버핏, 앤젤라 메르켈",
-            good:["ESFP","ESTP"], bad:["ENFP","ENTP"],
+            emoji:"📋", name:"현실주의자", color:"#2c3e50",
+            desc:"믿음직한 책임감의 아이콘! 규칙과 질서를 중요시하며 맡은 일은 반드시 해내요.",
+            strength:["강한 책임감","철저한 계획성","신뢰할 수 있음","꼼꼼하고 정확함"],
+            weakness:["변화에 적응이 느려요","융통성이 부족함","감정 표현이 서툴러요","고집이 셀 수 있음"],
+            love:"안정적이고 신뢰할 수 있는 관계를 원해요. 약속을 철저히 지키는 파트너를 좋아해요.",
+            career:"회계사, 공무원, 군인, 의사, 법조인",
+            famous:"워렌 버핏, 앙겔라 메르켈, 조지 워싱턴",
+            good:["ESTP","ESFP"], bad:["ENFP","ENTP"],
             products:[
-                {name:"❄️ 냉감 쿨매트", desc:"규칙적인 수면 환경 최적화", url:links.쿨매트, emoji:"❄️"},
-                {name:"🦟 모기 퇴치기", desc:"쾌적한 환경 유지 필수템", url:links.모기퇴치기, emoji:"🦟"},
-                {name:"🧴 자외선 차단 선크림", desc:"외출 시 철저한 피부 관리", url:links.선크림, emoji:"🧴"}
+                {name:"🌬️ 휴대용 미니 선풍기", desc:"계획적인 여름 필수 아이템", url:links.선풍기},
+                {name:"❄️ 냉감 쿨매트", desc:"집에서 시원하게 여름 나기", url:links.쿨매트},
+                {name:"🧴 자외선 차단 선크림", desc:"철저한 자외선 차단", url:links.선크림}
             ]
         },
         "ISFJ": {
             emoji:"🛡️", name:"수호자", color:"#16a085",
-            desc:"따뜻한 마음으로 주변을 돌보는 수호자! 헌신적이고 세심하게 타인을 배려하며, 사랑하는 사람들을 위해 묵묵히 최선을 다하는 유형이에요. 전통을 소중히 여기며 안정된 환경을 만드는 데 뛰어납니다.",
-            strength:["💖 따뜻한 배려심과 헌신","🎯 세심하고 꼼꼼한 관찰력","🏠 안정적인 환경 조성 능력","🤝 신뢰할 수 있는 팀플레이어"],
-            weakness:["😔 자신의 필요를 무시하고 타인에게 희생","🙅 변화를 싫어하고 현상 유지 선호","💬 자신의 감정을 직접적으로 표현 못함"],
-            love:"헌신적이고 배려 깊은 파트너예요. 상대방을 세심하게 챙기며, 안정적이고 따뜻한 관계를 원합니다.",
-            career:"간호사, 교사, 사서, 행정직, 사회복지사",
-            famous:"비욘세, 앤 해서웨이, 케이트 미들턴",
-            good:["ESFP","ESTP"], bad:["ENTP","ENTJ"],
+            desc:"따뜻한 보호자! 주변 사람들을 세심하게 챙기고 헌신적으로 도움을 줘요.",
+            strength:["세심한 배려심","강한 책임감","신뢰할 수 있음","실용적"],
+            weakness:["자신을 희생하는 경향","변화를 두려워함","거절을 못함","상처를 혼자 삭임"],
+            love:"헌신적이고 따뜻한 사랑을 해요. 파트너를 위해 작은 것까지 챙겨주는 타입이에요.",
+            career:"간호사, 교사, 사회복지사, 상담사, 행정직",
+            famous:"비욘세, 케이트 미들턴, 마더 테레사",
+            good:["ESTP","ESFP"], bad:["ENTP","ENFP"],
             products:[
-                {name:"🌿 쿨링 마스크팩", desc:"소중한 나를 위한 여름 케어", url:links.마스크팩, emoji:"🌿"},
-                {name:"❄️ 냉감 쿨매트", desc:"편안한 수면으로 건강 관리", url:links.쿨매트, emoji:"❄️"},
-                {name:"💧 쿨링 스프레이", desc:"더운 날 피부 진정 케어", url:links.쿨링스프레이, emoji:"💧"}
+                {name:"🧴 쿨링 마스크팩", desc:"소중한 사람들 챙기듯 내 피부도", url:links.마스크팩},
+                {name:"🧊 보냉 가방", desc:"가족 나들이 음식 챙기기", url:links.보냉가방},
+                {name:"☂️ 자외선 차단 양산", desc:"소중한 피부 꼼꼼히 보호", url:links.양산}
             ]
         },
         "ESTJ": {
-            emoji:"👔", name:"경영자", color:"#2980b9",
-            desc:"사회를 이끄는 관리자! 질서와 규칙을 중요시하며, 효율적으로 목표를 달성하는 데 탁월한 능력을 발휘해요. 책임감이 강하고 실용적인 성격으로, 조직에서 없어서는 안 될 핵심 인물입니다.",
-            strength:["📊 탁월한 조직 관리 능력","🎯 명확한 목표 설정과 실행","👥 팀을 효율적으로 이끄는 리더십","⚡ 결단력 있는 의사 결정"],
-            weakness:["😤 융통성 부족과 고집스러움","🎭 감정보다 논리를 우선시해 차갑게 보임","📌 다른 방식을 인정하기 어려움"],
-            love:"안정적이고 전통적인 관계를 원해요. 명확한 역할 분담을 선호하며, 책임감 있고 신뢰할 수 있는 파트너를 원합니다.",
-            career:"관리자, 군 장교, 판사, 금융가, 교장",
-            famous:"힐러리 클린턴, 미셸 오바마, 헨리 포드",
-            good:["ISFP","INFP"], bad:["INTP","INFP"],
+            emoji:"⚖️", name:"경영자", color:"#c0392b",
+            desc:"철저한 관리자! 규칙과 질서를 중요시하며 조직을 효율적으로 이끌어나가요.",
+            strength:["강한 리더십","철저한 책임감","실용적 사고","조직 관리 능력"],
+            weakness:["융통성 부족","감정 표현 서툴러요","지나치게 엄격함","변화 거부"],
+            love:"안정적이고 현실적인 사랑을 원해요. 약속과 책임을 중시하며 진지한 관계를 추구해요.",
+            career:"관리자, 판사, 경찰, 군인, 행정가",
+            famous:"엠마 왓슨, 미셸 오바마, 드와이트 아이젠하워",
+            good:["ISTP","INTP"], bad:["INFP","ISFP"],
             products:[
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"어디서나 쾌적한 업무 환경", url:links.선풍기, emoji:"🌬️"},
-                {name:"🧴 자외선 차단 선크림", desc:"외근 시 필수 자외선 차단", url:links.선크림, emoji:"🧴"},
-                {name:"🥤 아이스 텀블러", desc:"시원한 음료로 업무 효율 UP", url:links.텀블러, emoji:"🥤"}
+                {name:"🌬️ 휴대용 미니 선풍기", desc:"효율적인 여름 필수템", url:links.선풍기},
+                {name:"❄️ 냉감 쿨매트", desc:"집에서 시원하게 컨디션 유지", url:links.쿨매트},
+                {name:"🥤 아이스 텀블러", desc:"언제나 시원한 음료 준비", url:links.텀블러}
             ]
         },
         "ESFJ": {
-            emoji:"🤝", name:"집정관", color:"#e91e63",
-            desc:"사람들을 하나로 묶는 따뜻한 중심! 사교적이고 배려심이 넘치는 유형으로, 주변 사람들의 필요를 먼저 파악하고 도움을 주는 것에서 큰 보람을 느껴요. 조화로운 관계 형성의 달인입니다.",
-            strength:["🌺 탁월한 사교성과 친화력","💝 타인을 배려하는 따뜻한 마음","🎪 분위기를 살리는 에너지","📣 뛰어난 소통과 협력 능력"],
-            weakness:["👁️ 타인의 시선과 평가에 민감","🚫 갈등을 극도로 회피","💭 자신의 감정보다 타인 감정 우선"],
-            love:"따뜻하고 헌신적인 파트너예요. 연인에게 최선을 다하며, 함께하는 일상의 소소한 행복을 소중히 여깁니다.",
-            career:"교사, 간호사, 이벤트 플래너, PR 전문가, 사회복지사",
+            emoji:"🤝", name:"집정관", color:"#1abc9c",
+            desc:"사교적인 돌봄 전문가! 사람들과 조화를 이루고 모두가 행복하기를 원해요.",
+            strength:["뛰어난 사교성","강한 공감 능력","배려심이 깊음","협력 잘함"],
+            weakness:["타인 눈치를 많이 봄","갈등을 피하려 함","변화에 불안해함","자신보다 타인 우선"],
+            love:"헌신적이고 따뜻한 사랑을 해요. 파트너를 행복하게 해주는 것이 가장 큰 기쁨이에요.",
+            career:"간호사, 교사, 이벤트 플래너, 영업직, 사회복지사",
             famous:"테일러 스위프트, 제니퍼 로페즈, 휴 잭맨",
             good:["ISFP","INFP"], bad:["INTP","ISTP"],
             products:[
-                {name:"☂️ 자외선 차단 양산", desc:"모임에서도 깔끔하게 피부 관리", url:links.양산, emoji:"☂️"},
-                {name:"🌿 쿨링 마스크팩", desc:"더운 날 피부 쿨링 케어", url:links.마스크팩, emoji:"🌿"},
-                {name:"🎵 방수 블루투스 스피커", desc:"야외 모임 분위기 메이커", url:links.스피커, emoji:"🎵"}
+                {name:"🔊 방수 블루투스 스피커", desc:"모임에서 분위기 메이커", url:links.스피커},
+                {name:"🧊 보냉 가방", desc:"모임에 먹을거 챙겨가기", url:links.보냉가방},
+                {name:"🧴 쿨링 마스크팩", desc:"모임 전 피부 관리", url:links.마스크팩}
             ]
         },
         "ISTP": {
-            emoji:"🔧", name:"장인", color:"#607d8b",
-            desc:"과묵하지만 행동으로 말하는 실용주의자! 논리적 사고와 뛰어난 손재주로 어떤 문제든 해결하는 능력을 갖췄어요. 자유롭고 독립적인 성격으로, 규칙보다는 효율성을 중시하는 완벽한 실용주의자입니다.",
-            strength:["🛠️ 뛰어난 문제 해결 능력","⚡ 위기 상황에서 침착한 대응","🎯 실용적이고 효율적인 사고","🔍 세부사항을 꿰뚫는 관찰력"],
-            weakness:["😐 감정 표현과 공감에 서툼","🚀 장기적 헌신이나 계획 어려움","🔒 사생활 침해에 매우 민감"],
-            love:"자유로운 연애를 원해요. 구속받기 싫어하며, 파트너의 독립성을 존중하고 적당한 거리를 유지합니다.",
-            career:"엔지니어, 파일럿, 외과의사, 스턴트맨, 소방관",
-            famous:"클린트 이스트우드, 톰 크루즈, 버지니아 울프",
-            good:["ESTJ","ENTJ"], bad:["ENFJ","INFJ"],
+            emoji:"🔧", name:"장인", color:"#7f8c8d",
+            desc:"과묵한 문제 해결사! 손재주가 뛰어나고 위기 상황에서 냉철하게 대처해요.",
+            strength:["뛰어난 문제 해결 능력","냉철한 판단력","실용적 사고","위기 대처 능력"],
+            weakness:["감정 표현이 서툴러요","장기 계획이 약함","고집이 있음","사회성이 부족할 수 있음"],
+            love:"자유롭고 독립적인 관계를 원해요. 서로의 공간을 존중하는 파트너를 원해요.",
+            career:"엔지니어, 파일럿, 외과의사, 운동선수, 탐정",
+            famous:"클린트 이스트우드, 브루스 리, 스칼렛 조핸슨",
+            good:["ESTJ","ENTJ"], bad:["ENFJ","ESFJ"],
             products:[
-                {name:"🌬️ 미니 에어컨/냉풍기", desc:"개인 작업공간 시원하게", url:links.냉풍기, emoji:"🌬️"},
-                {name:"👟 아쿠아슈즈", desc:"야외 활동 필수 여름 신발", url:links.아쿠아슈즈, emoji:"👟"},
-                {name:"🎵 방수 블루투스 스피커", desc:"혼자 즐기는 야외 음악 감상", url:links.스피커, emoji:"🎵"}
+                {name:"👟 아쿠아슈즈", desc:"액티브한 여름 활동 필수", url:links.아쿠아슈즈},
+                {name:"💦 물놀이 튜브", desc:"혼자서도 즐기는 여름", url:links.튜브},
+                {name:"🌬️ 쿨링 넥밴드", desc:"야외 활동 시 시원함 유지", url:links.넥밴드}
             ]
         },
         "ISFP": {
-            emoji:"🎨", name:"모험가", color:"#ff9800",
-            desc:"조용하지만 열정적인 예술가! 외모로는 조용해 보이지만 내면에는 강렬한 감수성과 예술적 열정이 넘쳐요. 현재 이 순간을 충실히 살며, 아름다움과 자연을 사랑하는 자유로운 영혼입니다.",
-            strength:["🎨 뛰어난 예술적 감각과 심미안","💖 진정성 있는 공감 능력","🌿 현재 순간에 충실한 삶의 태도","🤝 갈등 없이 조화를 이루는 성격"],
-            weakness:["📅 미래 계획 수립과 실행에 약함","😔 비판에 매우 상처받음","💬 자신의 감정과 의견 표현 어려움"],
-            love:"진심으로 배려하고 사랑해요. 파트너에게 헌신적이며, 함께하는 소소한 일상을 소중히 여깁니다.",
-            career:"사진작가, 패션 디자이너, 음악가, 플로리스트, 요리사",
-            famous:"마이클 잭슨, 브리트니 스피어스, 리한나",
+            emoji:"🎨", name:"모험가", color:"#e74c3c",
+            desc:"감성적인 예술가! 아름다움을 추구하고 자신만의 방식으로 세상을 표현해요.",
+            strength:["뛰어난 감수성","예술적 재능","유연한 사고","현재를 즐기는 능력"],
+            weakness:["계획성이 부족해요","갈등을 피하려 함","자기 표현이 서툴러요","미래 계획이 약함"],
+            love:"자연스럽고 편안한 사랑을 원해요. 강요 없이 서로를 있는 그대로 받아들이는 관계를 원해요.",
+            career:"예술가, 디자이너, 음악가, 요리사, 패션디자이너",
+            famous:"마이클 잭슨, 리오넬 메시, 브리트니 스피어스",
             good:["ENFJ","ESFJ"], bad:["ENTJ","ESTJ"],
             products:[
-                {name:"💧 쿨링 스프레이", desc:"감성 여름 나들이 필수 케어", url:links.쿨링스프레이, emoji:"💧"},
-                {name:"🌿 쿨링 마스크팩", desc:"예쁜 피부 유지 여름 케어", url:links.마스크팩, emoji:"🌿"},
-                {name:"☂️ 자외선 차단 양산", desc:"감성적인 여름 야외 활동", url:links.양산, emoji:"☂️"}
+                {name:"🧴 쿨링 마스크팩", desc:"감성 셀프케어 시간", url:links.마스크팩},
+                {name:"☂️ 자외선 차단 양산", desc:"감성 여름 외출 필수템", url:links.양산},
+                {name:"🌬️ 휴대용 미니 선풍기", desc:"예쁜 디자인의 미니 선풍기", url:links.선풍기}
             ]
         },
         "ESTP": {
-            emoji:"⚡", name:"사업가", color:"#f44336",
-            desc:"행동이 말보다 빠른 에너자이저! 현재 이 순간에 집중하며, 스릴과 도전을 즐기는 활동적인 유형이에요. 뛰어난 관찰력과 현실 감각으로 어떤 상황에서도 기회를 포착하는 타고난 사업가입니다.",
-            strength:["⚡ 빠른 판단력과 실행력","👁️ 뛰어난 관찰력과 현실 감각","🎯 위기에서 빛나는 문제 해결 능력","🎉 주변을 즐겁게 만드는 에너지"],
-            weakness:["🏃 충동적이고 결과를 생각하지 않음","📚 이론적이고 추상적인 것을 싫어함","💔 타인의 감정을 간과하는 경향"],
-            love:"자유롭고 즉흥적인 연애를 즐겨요. 파트너와 함께 스릴 있는 경험을 추구하며, 지루한 일상보다 새로운 도전을 선호합니다.",
-            career:"기업가, 영업자, 주식 트레이더, 응급 구조사, 운동선수",
-            famous:"마돈나, 어니스트 헤밍웨이, 도널드 트럼프",
-            good:["ISFJ","ISTJ"], bad:["INFJ","INFP"],
+            emoji:"⚡", name:"사업가", color:"#f39c12",
+            desc:"에너지 넘치는 행동파! 현재 순간을 즐기고 즉흥적으로 문제를 해결하는 능력이 뛰어나요.",
+            strength:["뛰어난 행동력","빠른 상황 판단","사교성이 좋음","실용적 문제 해결"],
+            weakness:["장기 계획이 약해요","충동적인 결정","인내심 부족","규칙을 답답해함"],
+            love:"짜릿하고 활동적인 연애를 원해요! 함께 새로운 경험을 즐기는 파트너를 좋아해요.",
+            career:"기업가, 영업직, 운동선수, 응급구조사, 연예인",
+            famous:"도널드 트럼프, 마돈나, 에디 머피",
+            good:["ISFJ","ISTJ"], bad:["INFJ","INTJ"],
             products:[
-                {name:"🌊 물놀이 튜브", desc:"짜릿한 여름 물놀이 필수!", url:links.튜브, emoji:"🌊"},
-                {name:"👟 아쿠아슈즈", desc:"액티브한 여름 활동 필수 신발", url:links.아쿠아슈즈, emoji:"👟"},
-                {name:"🎵 방수 블루투스 스피커", desc:"야외 파티의 핵심 아이템", url:links.스피커, emoji:"🎵"}
+                {name:"💦 물놀이 튜브", desc:"여름 물놀이 화끈하게!", url:links.튜브},
+                {name:"🔊 방수 블루투스 스피커", desc:"신나는 여름 파티 필수", url:links.스피커},
+                {name:"👟 아쿠아슈즈", desc:"액티브한 여름 활동", url:links.아쿠아슈즈}
             ]
         },
         "ESFP": {
-            emoji:"🎭", name:"연예인", color:"#ff5722",
-            desc:"세상이 무대인 타고난 엔터테이너! 어디서든 주목받으며 주변 사람들을 행복하게 만드는 에너지가 넘쳐요. 현재를 즐기는 것이 삶의 철학이며, 즉흥적이고 유연하게 어떤 상황도 즐길 줄 아는 자유로운 영혼입니다.",
-            strength:["🎉 타고난 엔터테인먼트 능력","❤️ 사람들에게 기쁨을 주는 따뜻함","🌈 어디서든 긍정적인 분위기 조성","🎯 현재에 집중하는 즉흥적 능력"],
-            weakness:["⏰ 미래 계획과 장기적 목표 설정 약함","😔 비판을 받으면 쉽게 상처받음","📌 지루한 루틴과 일상에 지침"],
-            love:"즐겁고 활기찬 연애를 원해요. 파트너와 함께 다양한 경험을 나누며, 설레는 순간들을 소중히 여깁니다.",
-            career:"배우, 가수, 이벤트 플래너, 영업직, 관광 가이드",
-            famous:"엘튼 존, 마일리 사이러스, 아델",
-            good:["ISTJ","ISFJ"], bad:["INTJ","INFJ"],
+            emoji:"🎭", name:"연예인", color:"#e91e63",
+            desc:"무대 위의 스타! 사람들과 함께하는 것을 사랑하고 주변에 기쁨을 퍼뜨려요.",
+            strength:["뛰어난 사교성","긍정적 에너지","즉흥적 재능","사람을 즐겁게 함"],
+            weakness:["장기 계획이 약해요","주의가 산만함","갈등 회피","충동적 결정"],
+            love:"열정적이고 즐거운 사랑을 원해요! 함께 있으면 항상 즐거운 파트너를 원해요.",
+            career:"연예인, 이벤트 플래너, 관광가이드, 영업직, 요리사",
+            famous:"엘튼 존, 마일리 사이러스, 재미 올리버",
+            good:["ISFJ","ISTJ"], bad:["INTJ","INTP"],
             products:[
-                {name:"🌊 물놀이 튜브", desc:"신나는 여름의 주인공!", url:links.튜브, emoji:"🌊"},
-                {name:"🎵 방수 블루투스 스피커", desc:"어디서든 파티 모드 ON!", url:links.스피커, emoji:"🎵"},
-                {name:"👟 아쿠아슈즈", desc:"물놀이 완벽 마무리", url:links.아쿠아슈즈, emoji:"👟"}
+                {name:"💦 물놀이 튜브", desc:"여름 물놀이 완전 신나!", url:links.튜브},
+                {name:"🔊 방수 블루투스 스피커", desc:"파티 분위기 메이커", url:links.스피커},
+                {name:"🌬️ 쿨링 스프레이", desc:"더위도 날려버리는 쿨링 스프레이", url:links.쿨링스프레이}
             ]
         }
     };
 
+    // URL에서 파라미터 읽기
     const params = new URLSearchParams(window.location.search);
     const type = params.get('type') || 'INFP';
+    const scores = {
+        E: parseInt(params.get('E')) || 0,
+        I: parseInt(params.get('I')) || 0,
+        S: parseInt(params.get('S')) || 0,
+        N: parseInt(params.get('N')) || 0,
+        T: parseInt(params.get('T')) || 0,
+        F: parseInt(params.get('F')) || 0,
+        J: parseInt(params.get('J')) || 0,
+        P: parseInt(params.get('P')) || 0
+    };
+
     const data = mbtiData[type] || mbtiData['INFP'];
     document.title = `MBTI 결과 - ${type} ${data.name}`;
+
+    // 퍼센트 계산
+    const totalEI = scores.E + scores.I || 1;
+    const totalSN = scores.S + scores.N || 1;
+    const totalTF = scores.T + scores.F || 1;
+    const totalJP = scores.J + scores.P || 1;
+    const pctE = Math.round((scores.E / totalEI) * 100);
+    const pctI = 100 - pctE;
+    const pctN = Math.round((scores.N / totalSN) * 100);
+    const pctS = 100 - pctN;
+    const pctT = Math.round((scores.T / totalTF) * 100);
+    const pctF = 100 - pctT;
+    const pctJ = Math.round((scores.J / totalJP) * 100);
+    const pctP = 100 - pctJ;
 
     document.getElementById('result-content').innerHTML = `
         <div class="result-emoji">${data.emoji}</div>
@@ -321,14 +334,66 @@
         <div class="result-name">${data.name}</div>
         <p class="result-desc">${data.desc}</p>
 
+        <!-- 퍼센트 바 -->
+        <div class="percent-section">
+            <h3>📊 나의 성격 지표</h3>
+            <div class="percent-row">
+                <div class="percent-labels">
+                    <span class="percent-label-left">E 외향 ${pctE}%</span>
+                    <span class="percent-label-right">I 내향 ${pctI}%</span>
+                </div>
+                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctE}%"></div></div>
+            </div>
+            <div class="percent-row">
+                <div class="percent-labels">
+                    <span class="percent-label-left">N 직관 ${pctN}%</span>
+                    <span class="percent-label-right">S 감각 ${pctS}%</span>
+                </div>
+                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctN}%"></div></div>
+            </div>
+            <div class="percent-row">
+                <div class="percent-labels">
+                    <span class="percent-label-left">T 사고 ${pctT}%</span>
+                    <span class="percent-label-right">F 감정 ${pctF}%</span>
+                </div>
+                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctT}%"></div></div>
+            </div>
+            <div class="percent-row">
+                <div class="percent-labels">
+                    <span class="percent-label-left">P 인식 ${pctP}%</span>
+                    <span class="percent-label-right">J 판단 ${pctJ}%</span>
+                </div>
+                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctP}%"></div></div>
+            </div>
+        </div>
+
+        <!-- 쿠팡 추천템 (상단 배치) -->
+        <div class="product-section">
+            <h3>🌊 ${type}에게 딱 맞는 여름 추천템</h3>
+            <p class="product-sub">✅ 쿠팡에서 바로 확인해보세요!</p>
+            ${data.products.map(p => `
+                <a href="${p.url}" target="_blank" class="product-card">
+                    <div class="product-info">
+                        <strong>${p.name}</strong>
+                        <span>${p.desc}</span>
+                    </div>
+                    <span class="product-arrow">→</span>
+                </a>
+            `).join('')}
+            <p class="coupang-notice">※ 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+        </div>
+
+        <!-- 강점/약점 -->
         <div class="result-section">
             <h3>✨ 나의 강점</h3>
-            <ul class="result-list">${data.strength.map(s=>`<li>${s}</li>`).join('')}</ul>
+            <ul class="result-list">${data.strength.map(s=>`<li>✔️ ${s}</li>`).join('')}</ul>
         </div>
         <div class="result-section">
-            <h3>💪 이런 점은 개선해봐요</h3>
-            <ul class="result-list">${data.weakness.map(w=>`<li>${w}</li>`).join('')}</ul>
+            <h3>💪 개선할 점</h3>
+            <ul class="result-list">${data.weakness.map(w=>`<li>⚠️ ${w}</li>`).join('')}</ul>
         </div>
+
+        <!-- 연애/직업/유명인 -->
         <div class="result-section">
             <h3>💕 연애 스타일</h3>
             <p class="section-text">${data.love}</p>
@@ -342,43 +407,23 @@
             <p class="famous-text">${data.famous}</p>
         </div>
 
+        <!-- 궁합 -->
         <div class="compat">
-            <div class="compat-item good">
-                <span>💚 잘 맞는 유형</span>
-                <strong>${data.good.join(', ')}</strong>
-            </div>
-            <div class="compat-item bad">
-                <span>💔 불편한 유형</span>
-                <strong>${data.bad.join(', ')}</strong>
-            </div>
+            <div class="compat-item good"><span>💚 잘 맞는 유형</span><strong>${data.good.join(', ')}</strong></div>
+            <div class="compat-item bad"><span>💔 불편한 유형</span><strong>${data.bad.join(', ')}</strong></div>
         </div>
 
-        <div class="product-section">
-            <h3>🎁 ${type}에게 딱 맞는 여름 추천템!</h3>
-            <p class="product-sub">✅ 클릭하면 쿠팡에서 바로 확인할 수 있어요!</p>
-            ${data.products.map(p=>`
-                <a href="${p.url}" target="_blank" class="product-card">
-                    <span class="product-emoji">${p.emoji}</span>
-                    <div class="product-info">
-                        <strong>${p.name}</strong>
-                        <span>${p.desc}</span>
-                    </div>
-                    <span class="product-arrow">→</span>
-                </a>
-            `).join('')}
-            <p class="coupang-notice">※ 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        </div>
-
+        <!-- 공유 -->
         <div class="share-section">
             <h3>📤 친구에게 공유하기</h3>
-            <p class="share-sub">친구의 MBTI도 알아보세요! 😊</p>
-            <button class="share-btn" onclick="copyLink()">🔗 링크 복사해서 공유하기</button>
+            <p class="share-sub">친구의 MBTI도 알아보세요!</p>
+            <button class="share-btn copy" onclick="copyLink()">🔗 링크 복사해서 공유하기</button>
         </div>
         <button class="btn-retry" onclick="location.href='index.html'">🔄 다시 테스트하기</button>
     `;
 
-    function copyLink(){
-        navigator.clipboard.writeText(window.location.origin + window.location.pathname.replace('result.html','index.html'));
+    function copyLink() {
+        navigator.clipboard.writeText('https://worldjin2173-lab.github.io/-mbti-site');
         alert('링크가 복사됐어요! 친구에게 공유해보세요 😊');
     }
     </script>
