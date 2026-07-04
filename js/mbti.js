@@ -83,5 +83,7 @@ function goToResult() {
         (scores.S >= scores.N ? 'S' : 'N') +
         (scores.T >= scores.F ? 'T' : 'F') +
         (scores.J >= scores.P ? 'J' : 'P');
-    window.location.href = `result.html?type=${mbti}`;
+
+    const params = `type=${mbti}&E=${scores.E}&I=${scores.I}&S=${scores.S}&N=${scores.N}&T=${scores.T}&F=${scores.F}&J=${scores.J}&P=${scores.P}`;
+    window.location.href = `result.html?${params}`;
 }
