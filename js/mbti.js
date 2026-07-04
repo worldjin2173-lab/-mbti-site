@@ -349,13 +349,23 @@ function msShowResult(){
   var ph=document.getElementById('ms-products');
   if(ph){
     ph.innerHTML='';
-    d.products.forEach(function(p){
-      ph.innerHTML+='<a href="'+p.url+'" target="_blank" rel="noopener" class="ms-prod-card">'
-        +'<span class="ms-prod-icon">'+p.icon+'</span>'
-        +'<span class="ms-prod-info"><span class="ms-prod-name">'+p.name+'</span>'
-        +'<span class="ms-prod-sub">'+p.sub+'</span></span>'
-        +'<span class="ms-prod-arrow">→</span></a>';
-    });
+    if(d.products && d.products.length>0){
+      d.products.forEach(function(p){
+        var card=document.createElement('a');
+        card.href=p.url;
+        card.target='_blank';
+        card.rel='noopener';
+        card.className='ms-prod-card';
+        card.innerHTML=
+          '<span class="ms-prod-icon">'+p.icon+'</span>'
+          +'<span class="ms-prod-info">'
+          +'<span class="ms-prod-name">'+p.name+'</span>'
+          +'<span class="ms-prod-sub">'+p.sub+'</span>'
+          +'</span>'
+          +'<span class="ms-prod-arrow">→</span>';
+        ph.appendChild(card);
+      });
+    }
   }
 
   msShow('ms-result');
