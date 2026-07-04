@@ -3,429 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI 결과</title>
+    <title>🔮 MBTI 유형 검사하기 - 나의 진짜 성격은?</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-    /* 퍼센트 바 */
-    .percent-section { background:#f8f0ff; border-radius:16px; padding:20px; margin-bottom:20px; }
-    .percent-section h3 { font-size:17px; margin-bottom:16px; color:#444; text-align:center; }
-    .percent-row { margin-bottom:14px; }
-    .percent-labels { display:flex; justify-content:space-between; margin-bottom:4px; }
-    .percent-label-left { font-size:13px; font-weight:700; color:#764ba2; }
-    .percent-label-right { font-size:13px; font-weight:700; color:#aaa; }
-    .percent-bar-wrap { background:#e8e0f0; border-radius:10px; height:14px; overflow:hidden; }
-    .percent-bar-fill { height:14px; border-radius:10px; background:linear-gradient(135deg,#667eea,#764ba2); transition:width 1s ease; }
-    /* 결과 섹션 */
-    .result-section { background:#f8f0ff; border-radius:14px; padding:16px 20px; margin-bottom:16px; text-align:left; }
-    .result-section h3 { font-size:16px; margin-bottom:10px; color:#444; }
-    .result-list { padding-left:0; list-style:none; }
-    .result-list li { padding:6px 0; font-size:14px; color:#555; border-bottom:1px solid #ede0ff; }
-    .result-list li:last-child { border-bottom:none; }
-    .section-text { font-size:14px; color:#555; line-height:1.7; margin:0; }
-    .famous-text { font-size:15px; color:#764ba2; font-weight:600; margin:0; }
-    .share-sub { color:#888; font-size:13px; margin-bottom:12px; }
-    </style>
+    <meta name="description" content="나의 진짜 성격 유형은? 20가지 질문으로 알아보는 MBTI 테스트! 지금 바로 시작해보세요 ✨" />
+    <meta name="keywords" content="MBTI 테스트, 성격유형검사, MBTI 무료, MBTI 검사, 성격테스트" />
+    <meta property="og:title" content="🔮 MBTI 유형 검사하기" />
+    <meta property="og:description" content="나의 진짜 성격 유형은? 20가지 질문으로 알아보는 MBTI 테스트!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://worldjin2173-lab.github.io/-mbti-site" />
+    <meta property="og:image" content="https://worldjin2173-lab.github.io/-mbti-site/images/og-image.jpg" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="심리테스트 연구소" />
 </head>
 <body>
-    <div id="result-screen" class="screen active">
+
+    <!-- 시작 화면 -->
+    <div id="ms-start" class="ms-screen active">
         <div class="container">
-            <div id="result-content"></div>
+            <div class="emoji-big">🔮</div>
+            <h1>MBTI 유형 검사하기</h1>
+            <p class="subtitle">20가지 질문으로 알아보는<br>나의 진짜 성격 유형</p>
+            <div class="stats">
+                <span>👥 누적 참여 1,284,927명</span>
+            </div>
+            <button class="btn-start" onclick="msStart()">✨ 테스트 시작하기 →</button>
+            <p class="notice">※ 약 3분 소요 · 무료</p>
         </div>
     </div>
 
-    <script>
-    // 쿠팡 링크
-    const links = {
-        선풍기: "https://link.coupang.com/a/e6pbm4Zb08",
-        선크림: "https://link.coupang.com/a/e6pphuCkX6",
-        텀블러: "https://link.coupang.com/a/e6puuJtn2G",
-        스피커: "https://link.coupang.com/a/e6pxtoZjBQ",
-        튜브: "https://link.coupang.com/a/e6xIRZIAp2",
-        돗자리: "https://link.coupang.com/a/e6xKzsycMe",
-        양산: "https://link.coupang.com/a/e6xNn9PFAq",
-        마스크팩: "https://link.coupang.com/a/e6xPCN1UIe",
-        모기퇴치기: "https://link.coupang.com/a/e6xRecZh8u",
-        쿨매트: "https://link.coupang.com/a/e6xRecZh8u",
-        넥밴드: "https://link.coupang.com/a/e6x2Ij2G9A",
-        아쿠아슈즈: "https://link.coupang.com/a/e6x5y0ethI",
-        냉풍기: "https://link.coupang.com/a/e6x7Vhg6ou",
-        보냉가방: "https://link.coupang.com/a/e6x9lMLPGe",
-        쿨링스프레이: "https://link.coupang.com/a/e6yaSBkLZY"
-    };
-
-    // MBTI 데이터
-    const mbtiData = {
-        "INTJ": {
-            emoji:"🔭", name:"전략가", color:"#4a90d9",
-            desc:"독립적이고 분석적인 완벽주의자! 계획을 세우고 목표를 향해 나아가는 것을 즐겨요.",
-            strength:["뛰어난 전략적 사고","높은 집중력과 추진력","독립적으로 문제 해결","창의적이고 혁신적"],
-            weakness:["감정 표현이 서툴러요","완벽주의로 스트레스 많음","타인 의견 무시할 수 있음","혼자만의 세계에 빠짐"],
-            love:"연애에서도 전략적! 감정보다 논리를 앞세우지만 한번 마음을 열면 깊은 사랑을 해요.",
-            career:"과학자, 개발자, 전략기획자, 투자분석가, 건축가",
-            famous:"일론 머스크, 마크 저커버그, 니체",
-            good:["ENTP","ENFP"], bad:["ESFP","ESFJ"],
-            products:[
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"혼자 집중할 때 시원하게!", url:links.선풍기},
-                {name:"🧴 자외선 차단 선크림", desc:"외출할 때 필수 아이템", url:links.선크림},
-                {name:"🥤 아이스 텀블러", desc:"차가운 음료 오래 유지", url:links.텀블러}
-            ]
-        },
-        "INTP": {
-            emoji:"🔬", name:"논리술사", color:"#5b8dd9",
-            desc:"호기심 많은 사색가! 복잡한 문제를 분석하고 해결하는 것을 즐겨요.",
-            strength:["논리적 분석력이 뛰어남","창의적 아이디어 풍부","객관적 사고","다양한 분야 지식"],
-            weakness:["우유부단할 수 있어요","감정 공감이 부족함","현실 감각이 떨어질 수 있음","마무리가 약해요"],
-            love:"연애보다 지적 교감을 중요시해요. 대화가 통하는 사람에게 깊이 빠져들어요.",
-            career:"프로그래머, 철학자, 수학자, 연구원, 작가",
-            famous:"아인슈타인, 빌 게이츠, 다윈",
-            good:["ENTJ","ESTJ"], bad:["ESFJ","ENFJ"],
-            products:[
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"집중할 때 시원하게!", url:links.선풍기},
-                {name:"🥤 아이스 텀블러", desc:"공부할 때 시원한 음료와 함께", url:links.텀블러},
-                {name:"❄️ 냉감 쿨매트", desc:"더운 여름 시원하게 앉아서 공부", url:links.쿨매트}
-            ]
-        },
-        "ENTJ": {
-            emoji:"👑", name:"통솔자", color:"#e74c3c",
-            desc:"타고난 리더! 목표를 향해 돌진하며 주변 사람들을 이끄는 카리스마가 넘쳐요.",
-            strength:["강력한 리더십","빠른 의사결정","목표 지향적","높은 추진력"],
-            weakness:["고집이 강해요","타인 감정 배려 부족","너무 직선적","완벽주의 성향"],
-            love:"연애도 목표처럼 추진해요! 적극적으로 다가가지만 상대방의 감정을 놓칠 수 있어요.",
-            career:"CEO, 변호사, 정치인, 컨설턴트, 군인",
-            famous:"스티브 잡스, 나폴레옹, 마가렛 대처",
-            good:["INTP","ISTP"], bad:["INFP","ISFP"],
-            products:[
-                {name:"💦 물놀이 튜브", desc:"리더답게 물놀이도 화끈하게!", url:links.튜브},
-                {name:"🔊 방수 블루투스 스피커", desc:"어디서든 분위기 메이커", url:links.스피커},
-                {name:"🥤 아이스 텀블러", desc:"바쁜 일정 속 시원함 유지", url:links.텀블러}
-            ]
-        },
-        "ENTP": {
-            emoji:"💡", name:"변론가", color:"#e67e22",
-            desc:"아이디어가 넘치는 토론왕! 새로운 것에 도전하고 기존의 틀을 깨는 것을 즐겨요.",
-            strength:["창의적 아이디어","뛰어난 토론 능력","빠른 적응력","다재다능"],
-            weakness:["끈기가 부족해요","논쟁을 즐겨 갈등 유발","집중력이 산만함","계획 실행이 약함"],
-            love:"연애도 토론처럼! 지적 자극을 주는 파트너에게 끌리고 새로운 경험을 함께 하고 싶어해요.",
-            career:"기업가, 마케터, 발명가, 코미디언, 컨설턴트",
-            famous:"토마스 에디슨, 벤저민 프랭클린, 로버트 다우니 주니어",
-            good:["INTJ","INFJ"], bad:["ISFJ","ISTJ"],
-            products:[
-                {name:"🔊 방수 블루투스 스피커", desc:"어디서든 신나게!", url:links.스피커},
-                {name:"💦 물놀이 튜브", desc:"여름 물놀이 도전!", url:links.튜브},
-                {name:"👟 아쿠아슈즈", desc:"액티브한 여름 활동에 필수", url:links.아쿠아슈즈}
-            ]
-        },
-        "INFJ": {
-            emoji:"🌙", name:"옹호자", color:"#8e44ad",
-            desc:"통찰력 있는 이상주의자! 타인을 깊이 이해하고 세상을 더 나은 곳으로 만들고 싶어해요.",
-            strength:["깊은 통찰력","강한 공감 능력","창의적 비전","진정성 있는 관계"],
-            weakness:["완벽주의로 번아웃","비판에 상처받음","혼자 고민을 삼킴","현실과 이상의 괴리"],
-            love:"깊고 의미있는 사랑을 원해요. 영혼의 단짝을 찾고 있으며 표면적 관계엔 관심 없어요.",
-            career:"상담사, 작가, 심리학자, 사회운동가, 교사",
-            famous:"간디, 마틴 루터 킹, 테일러 스위프트",
-            good:["ENTP","ENFP"], bad:["ESTP","ESFP"],
-            products:[
-                {name:"🧴 쿨링 마스크팩", desc:"지친 하루 피부 케어로 힐링", url:links.마스크팩},
-                {name:"☂️ 자외선 차단 양산", desc:"감성적인 여름 외출 필수품", url:links.양산},
-                {name:"🧴 자외선 차단 선크림", desc:"소중한 피부 지키기", url:links.선크림}
-            ]
-        },
-        "INFP": {
-            emoji:"🌸", name:"중재자", color:"#e91e8c",
-            desc:"감성적인 몽상가! 자신만의 가치관과 이상을 소중히 여기며 진정한 자아를 찾아가요.",
-            strength:["풍부한 감수성","강한 공감 능력","창의적 표현력","진실한 관계 추구"],
-            weakness:["현실 감각 부족","우유부단함","혼자 상처받음","비판에 예민함"],
-            love:"로맨틱한 사랑을 꿈꿔요. 감정적 교감이 가장 중요하며 진심을 나눌 수 있는 관계를 원해요.",
-            career:"작가, 시인, 디자이너, 상담사, 예술가",
-            famous:"윌리엄 셰익스피어, 조니 뎁, 아이유",
-            good:["ENFJ","ENTJ"], bad:["ESTJ","ESFJ"],
-            products:[
-                {name:"🧴 쿨링 마스크팩", desc:"감성 충전 셀프케어 시간", url:links.마스크팩},
-                {name:"☂️ 자외선 차단 양산", desc:"감성 여름 산책 필수템", url:links.양산},
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"더운 여름도 감성있게", url:links.선풍기}
-            ]
-        },
-        "ENFJ": {
-            emoji:"🌟", name:"선도자", color:"#27ae60",
-            desc:"카리스마 넘치는 리더! 사람들에게 영감을 주고 함께 성장하는 것을 즐겨요.",
-            strength:["뛰어난 소통 능력","강한 공감력","사람들을 이끄는 능력","열정적"],
-            weakness:["타인 의견에 지나치게 신경씀","자신을 희생하는 경향","스트레스를 잘 받음","완벽주의"],
-            love:"헌신적인 사랑을 해요. 파트너를 위해 모든 것을 쏟아붓는 스타일이에요.",
-            career:"교사, 코치, 배우, 홍보담당자, 사회복지사",
-            famous:"오바마, 오프라 윈프리, 방탄소년단 RM",
-            good:["INFP","ISFP"], bad:["ISTP","INTP"],
-            products:[
-                {name:"🔊 방수 블루투스 스피커", desc:"친구들과 여름 파티 필수!", url:links.스피커},
-                {name:"💦 물놀이 튜브", desc:"모두와 함께하는 물놀이", url:links.튜브},
-                {name:"🧊 보냉 가방", desc:"모임에 음식 챙겨가기 필수", url:links.보냉가방}
-            ]
-        },
-        "ENFP": {
-            emoji:"🦋", name:"활동가", color:"#f39c12",
-            desc:"열정적인 자유로운 영혼! 새로운 가능성을 탐색하고 사람들과 연결되는 것을 즐겨요.",
-            strength:["뛰어난 창의력","강한 열정","사람 사귀기 좋아함","긍정적 에너지"],
-            weakness:["집중력 부족","감정 기복이 있음","계획 실행이 약함","쉽게 지루함을 느낌"],
-            love:"설레는 감정을 중요시해요! 로맨틱하고 열정적인 사랑을 원하며 새로운 경험을 함께 하고 싶어해요.",
-            career:"방송인, 마케터, 배우, 코치, 기업가",
-            famous:"로빈 윌리엄스, 윌 스미스, 제니퍼 애니스톤",
-            good:["INTJ","INFJ"], bad:["ISTJ","ISFJ"],
-            products:[
-                {name:"💦 물놀이 튜브", desc:"여름 물놀이 최고!", url:links.튜브},
-                {name:"🔊 방수 블루투스 스피커", desc:"신나는 여름 필수템", url:links.스피커},
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"활동적인 여름을 시원하게", url:links.선풍기}
-            ]
-        },
-        "ISTJ": {
-            emoji:"📋", name:"현실주의자", color:"#2c3e50",
-            desc:"믿음직한 책임감의 아이콘! 규칙과 질서를 중요시하며 맡은 일은 반드시 해내요.",
-            strength:["강한 책임감","철저한 계획성","신뢰할 수 있음","꼼꼼하고 정확함"],
-            weakness:["변화에 적응이 느려요","융통성이 부족함","감정 표현이 서툴러요","고집이 셀 수 있음"],
-            love:"안정적이고 신뢰할 수 있는 관계를 원해요. 약속을 철저히 지키는 파트너를 좋아해요.",
-            career:"회계사, 공무원, 군인, 의사, 법조인",
-            famous:"워렌 버핏, 앙겔라 메르켈, 조지 워싱턴",
-            good:["ESTP","ESFP"], bad:["ENFP","ENTP"],
-            products:[
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"계획적인 여름 필수 아이템", url:links.선풍기},
-                {name:"❄️ 냉감 쿨매트", desc:"집에서 시원하게 여름 나기", url:links.쿨매트},
-                {name:"🧴 자외선 차단 선크림", desc:"철저한 자외선 차단", url:links.선크림}
-            ]
-        },
-        "ISFJ": {
-            emoji:"🛡️", name:"수호자", color:"#16a085",
-            desc:"따뜻한 보호자! 주변 사람들을 세심하게 챙기고 헌신적으로 도움을 줘요.",
-            strength:["세심한 배려심","강한 책임감","신뢰할 수 있음","실용적"],
-            weakness:["자신을 희생하는 경향","변화를 두려워함","거절을 못함","상처를 혼자 삭임"],
-            love:"헌신적이고 따뜻한 사랑을 해요. 파트너를 위해 작은 것까지 챙겨주는 타입이에요.",
-            career:"간호사, 교사, 사회복지사, 상담사, 행정직",
-            famous:"비욘세, 케이트 미들턴, 마더 테레사",
-            good:["ESTP","ESFP"], bad:["ENTP","ENFP"],
-            products:[
-                {name:"🧴 쿨링 마스크팩", desc:"소중한 사람들 챙기듯 내 피부도", url:links.마스크팩},
-                {name:"🧊 보냉 가방", desc:"가족 나들이 음식 챙기기", url:links.보냉가방},
-                {name:"☂️ 자외선 차단 양산", desc:"소중한 피부 꼼꼼히 보호", url:links.양산}
-            ]
-        },
-        "ESTJ": {
-            emoji:"⚖️", name:"경영자", color:"#c0392b",
-            desc:"철저한 관리자! 규칙과 질서를 중요시하며 조직을 효율적으로 이끌어나가요.",
-            strength:["강한 리더십","철저한 책임감","실용적 사고","조직 관리 능력"],
-            weakness:["융통성 부족","감정 표현 서툴러요","지나치게 엄격함","변화 거부"],
-            love:"안정적이고 현실적인 사랑을 원해요. 약속과 책임을 중시하며 진지한 관계를 추구해요.",
-            career:"관리자, 판사, 경찰, 군인, 행정가",
-            famous:"엠마 왓슨, 미셸 오바마, 드와이트 아이젠하워",
-            good:["ISTP","INTP"], bad:["INFP","ISFP"],
-            products:[
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"효율적인 여름 필수템", url:links.선풍기},
-                {name:"❄️ 냉감 쿨매트", desc:"집에서 시원하게 컨디션 유지", url:links.쿨매트},
-                {name:"🥤 아이스 텀블러", desc:"언제나 시원한 음료 준비", url:links.텀블러}
-            ]
-        },
-        "ESFJ": {
-            emoji:"🤝", name:"집정관", color:"#1abc9c",
-            desc:"사교적인 돌봄 전문가! 사람들과 조화를 이루고 모두가 행복하기를 원해요.",
-            strength:["뛰어난 사교성","강한 공감 능력","배려심이 깊음","협력 잘함"],
-            weakness:["타인 눈치를 많이 봄","갈등을 피하려 함","변화에 불안해함","자신보다 타인 우선"],
-            love:"헌신적이고 따뜻한 사랑을 해요. 파트너를 행복하게 해주는 것이 가장 큰 기쁨이에요.",
-            career:"간호사, 교사, 이벤트 플래너, 영업직, 사회복지사",
-            famous:"테일러 스위프트, 제니퍼 로페즈, 휴 잭맨",
-            good:["ISFP","INFP"], bad:["INTP","ISTP"],
-            products:[
-                {name:"🔊 방수 블루투스 스피커", desc:"모임에서 분위기 메이커", url:links.스피커},
-                {name:"🧊 보냉 가방", desc:"모임에 먹을거 챙겨가기", url:links.보냉가방},
-                {name:"🧴 쿨링 마스크팩", desc:"모임 전 피부 관리", url:links.마스크팩}
-            ]
-        },
-        "ISTP": {
-            emoji:"🔧", name:"장인", color:"#7f8c8d",
-            desc:"과묵한 문제 해결사! 손재주가 뛰어나고 위기 상황에서 냉철하게 대처해요.",
-            strength:["뛰어난 문제 해결 능력","냉철한 판단력","실용적 사고","위기 대처 능력"],
-            weakness:["감정 표현이 서툴러요","장기 계획이 약함","고집이 있음","사회성이 부족할 수 있음"],
-            love:"자유롭고 독립적인 관계를 원해요. 서로의 공간을 존중하는 파트너를 원해요.",
-            career:"엔지니어, 파일럿, 외과의사, 운동선수, 탐정",
-            famous:"클린트 이스트우드, 브루스 리, 스칼렛 조핸슨",
-            good:["ESTJ","ENTJ"], bad:["ENFJ","ESFJ"],
-            products:[
-                {name:"👟 아쿠아슈즈", desc:"액티브한 여름 활동 필수", url:links.아쿠아슈즈},
-                {name:"💦 물놀이 튜브", desc:"혼자서도 즐기는 여름", url:links.튜브},
-                {name:"🌬️ 쿨링 넥밴드", desc:"야외 활동 시 시원함 유지", url:links.넥밴드}
-            ]
-        },
-        "ISFP": {
-            emoji:"🎨", name:"모험가", color:"#e74c3c",
-            desc:"감성적인 예술가! 아름다움을 추구하고 자신만의 방식으로 세상을 표현해요.",
-            strength:["뛰어난 감수성","예술적 재능","유연한 사고","현재를 즐기는 능력"],
-            weakness:["계획성이 부족해요","갈등을 피하려 함","자기 표현이 서툴러요","미래 계획이 약함"],
-            love:"자연스럽고 편안한 사랑을 원해요. 강요 없이 서로를 있는 그대로 받아들이는 관계를 원해요.",
-            career:"예술가, 디자이너, 음악가, 요리사, 패션디자이너",
-            famous:"마이클 잭슨, 리오넬 메시, 브리트니 스피어스",
-            good:["ENFJ","ESFJ"], bad:["ENTJ","ESTJ"],
-            products:[
-                {name:"🧴 쿨링 마스크팩", desc:"감성 셀프케어 시간", url:links.마스크팩},
-                {name:"☂️ 자외선 차단 양산", desc:"감성 여름 외출 필수템", url:links.양산},
-                {name:"🌬️ 휴대용 미니 선풍기", desc:"예쁜 디자인의 미니 선풍기", url:links.선풍기}
-            ]
-        },
-        "ESTP": {
-            emoji:"⚡", name:"사업가", color:"#f39c12",
-            desc:"에너지 넘치는 행동파! 현재 순간을 즐기고 즉흥적으로 문제를 해결하는 능력이 뛰어나요.",
-            strength:["뛰어난 행동력","빠른 상황 판단","사교성이 좋음","실용적 문제 해결"],
-            weakness:["장기 계획이 약해요","충동적인 결정","인내심 부족","규칙을 답답해함"],
-            love:"짜릿하고 활동적인 연애를 원해요! 함께 새로운 경험을 즐기는 파트너를 좋아해요.",
-            career:"기업가, 영업직, 운동선수, 응급구조사, 연예인",
-            famous:"도널드 트럼프, 마돈나, 에디 머피",
-            good:["ISFJ","ISTJ"], bad:["INFJ","INTJ"],
-            products:[
-                {name:"💦 물놀이 튜브", desc:"여름 물놀이 화끈하게!", url:links.튜브},
-                {name:"🔊 방수 블루투스 스피커", desc:"신나는 여름 파티 필수", url:links.스피커},
-                {name:"👟 아쿠아슈즈", desc:"액티브한 여름 활동", url:links.아쿠아슈즈}
-            ]
-        },
-        "ESFP": {
-            emoji:"🎭", name:"연예인", color:"#e91e63",
-            desc:"무대 위의 스타! 사람들과 함께하는 것을 사랑하고 주변에 기쁨을 퍼뜨려요.",
-            strength:["뛰어난 사교성","긍정적 에너지","즉흥적 재능","사람을 즐겁게 함"],
-            weakness:["장기 계획이 약해요","주의가 산만함","갈등 회피","충동적 결정"],
-            love:"열정적이고 즐거운 사랑을 원해요! 함께 있으면 항상 즐거운 파트너를 원해요.",
-            career:"연예인, 이벤트 플래너, 관광가이드, 영업직, 요리사",
-            famous:"엘튼 존, 마일리 사이러스, 재미 올리버",
-            good:["ISFJ","ISTJ"], bad:["INTJ","INTP"],
-            products:[
-                {name:"💦 물놀이 튜브", desc:"여름 물놀이 완전 신나!", url:links.튜브},
-                {name:"🔊 방수 블루투스 스피커", desc:"파티 분위기 메이커", url:links.스피커},
-                {name:"🌬️ 쿨링 스프레이", desc:"더위도 날려버리는 쿨링 스프레이", url:links.쿨링스프레이}
-            ]
-        }
-    };
-
-    // URL에서 파라미터 읽기
-    const params = new URLSearchParams(window.location.search);
-    const type = params.get('type') || 'INFP';
-    const scores = {
-        E: parseInt(params.get('E')) || 0,
-        I: parseInt(params.get('I')) || 0,
-        S: parseInt(params.get('S')) || 0,
-        N: parseInt(params.get('N')) || 0,
-        T: parseInt(params.get('T')) || 0,
-        F: parseInt(params.get('F')) || 0,
-        J: parseInt(params.get('J')) || 0,
-        P: parseInt(params.get('P')) || 0
-    };
-
-    const data = mbtiData[type] || mbtiData['INFP'];
-    document.title = `MBTI 결과 - ${type} ${data.name}`;
-
-    // 퍼센트 계산
-    const totalEI = scores.E + scores.I || 1;
-    const totalSN = scores.S + scores.N || 1;
-    const totalTF = scores.T + scores.F || 1;
-    const totalJP = scores.J + scores.P || 1;
-    const pctE = Math.round((scores.E / totalEI) * 100);
-    const pctI = 100 - pctE;
-    const pctN = Math.round((scores.N / totalSN) * 100);
-    const pctS = 100 - pctN;
-    const pctT = Math.round((scores.T / totalTF) * 100);
-    const pctF = 100 - pctT;
-    const pctJ = Math.round((scores.J / totalJP) * 100);
-    const pctP = 100 - pctJ;
-
-    document.getElementById('result-content').innerHTML = `
-        <div class="result-emoji">${data.emoji}</div>
-        <div class="result-type" style="color:${data.color}">${type}</div>
-        <div class="result-name">${data.name}</div>
-        <p class="result-desc">${data.desc}</p>
-
-        <!-- 퍼센트 바 -->
-        <div class="percent-section">
-            <h3>📊 나의 성격 지표</h3>
-            <div class="percent-row">
-                <div class="percent-labels">
-                    <span class="percent-label-left">E 외향 ${pctE}%</span>
-                    <span class="percent-label-right">I 내향 ${pctI}%</span>
+    <!-- 테스트 화면 -->
+    <div id="ms-test" class="ms-screen">
+        <div class="container">
+            <div class="progress-wrap">
+                <div class="progress-info">
+                    <span id="ms-prog-txt">1 / 20</span>
+                    <span id="ms-prog-pct">0%</span>
                 </div>
-                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctE}%"></div></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="ms-prog-fill"></div>
+                </div>
             </div>
-            <div class="percent-row">
-                <div class="percent-labels">
-                    <span class="percent-label-left">N 직관 ${pctN}%</span>
-                    <span class="percent-label-right">S 감각 ${pctS}%</span>
-                </div>
-                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctN}%"></div></div>
+            <div class="question-card">
+                <div class="q-emoji" id="ms-q-emoji"></div>
+                <h2 class="question" id="ms-q-text"></h2>
             </div>
-            <div class="percent-row">
-                <div class="percent-labels">
-                    <span class="percent-label-left">T 사고 ${pctT}%</span>
-                    <span class="percent-label-right">F 감정 ${pctF}%</span>
-                </div>
-                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctT}%"></div></div>
-            </div>
-            <div class="percent-row">
-                <div class="percent-labels">
-                    <span class="percent-label-left">P 인식 ${pctP}%</span>
-                    <span class="percent-label-right">J 판단 ${pctJ}%</span>
-                </div>
-                <div class="percent-bar-wrap"><div class="percent-bar-fill" style="width:${pctP}%"></div></div>
+            <div class="answers">
+                <button class="answer-btn" id="ms-btn-a" onclick="msAnswer('a')"></button>
+                <button class="answer-btn" id="ms-btn-b" onclick="msAnswer('b')"></button>
             </div>
         </div>
+    </div>
 
-        <!-- 쿠팡 추천템 (상단 배치) -->
-        <div class="product-section">
-            <h3>🌊 ${type}에게 딱 맞는 여름 추천템</h3>
-            <p class="product-sub">✅ 쿠팡에서 바로 확인해보세요!</p>
-            ${data.products.map(p => `
-                <a href="${p.url}" target="_blank" class="product-card">
-                    <div class="product-info">
-                        <strong>${p.name}</strong>
-                        <span>${p.desc}</span>
+    <!-- 로딩 화면 -->
+    <div id="ms-loading" class="ms-screen">
+        <div class="container">
+            <div class="loading-emoji">🔮</div>
+            <h2>분석 중...</h2>
+            <p>당신의 성격 유형을 분석하고 있어요</p>
+            <div class="loading-bar">
+                <div class="loading-fill" id="ms-load-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div id="ms-result" class="ms-screen">
+        <div class="container" style="padding:0;overflow:hidden;">
+
+            <!-- 상단 헤더 -->
+            <div id="ms-res-header" style="padding:30px 20px;text-align:center;color:white;">
+                <div id="ms-res-emoji" style="font-size:70px;margin-bottom:10px;"></div>
+                <div id="ms-res-type" style="font-size:48px;font-weight:900;"></div>
+                <div id="ms-res-name" style="font-size:22px;font-weight:700;margin-top:4px;opacity:0.9;"></div>
+            </div>
+
+            <div style="padding:24px 20px;">
+
+                <!-- 1순위: 성격 설명 -->
+                <div class="result-section">
+                    <h3>✨ 성격 설명</h3>
+                    <p class="section-text" id="ms-desc"></p>
+                </div>
+
+                <!-- 2순위: 추천 아이템 -->
+                <div class="product-section">
+                    <h3>🛍️ 내 유형 추천 아이템</h3>
+                    <div id="ms-products"></div>
+                    <p style="font-size:11px;color:#bbb;text-align:center;margin-top:10px;">
+                        이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+                    </p>
+                </div>
+
+                <!-- 3순위: 링크 복사 -->
+                <div class="share-section">
+                    <h3>📢 친구에게 공유하기</h3>
+                    <p class="share-sub">친구의 MBTI도 알아보세요!</p>
+                    <button class="share-btn copy" onclick="msShare()">🔗 링크 복사하기</button>
+                </div>
+
+                <!-- 4순위: 성향 비율 -->
+                <div class="result-section">
+                    <h3>📊 나의 성향 비율</h3>
+                    <div style="margin-top:10px;">
+                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                            <span id="lbl-e"></span><span id="lbl-i"></span>
+                        </div>
+                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+                            <div id="bar-e" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                            <span id="lbl-n"></span><span id="lbl-s"></span>
+                        </div>
+                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+                            <div id="bar-n" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                            <span id="lbl-t"></span><span id="lbl-f"></span>
+                        </div>
+                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+                            <div id="bar-t" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                            <span id="lbl-p"></span><span id="lbl-j"></span>
+                        </div>
+                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+                            <div id="bar-p" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+                        </div>
                     </div>
-                    <span class="product-arrow">→</span>
-                </a>
-            `).join('')}
-            <p class="coupang-notice">※ 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-        </div>
+                </div>
 
-        <!-- 강점/약점 -->
-        <div class="result-section">
-            <h3>✨ 나의 강점</h3>
-            <ul class="result-list">${data.strength.map(s=>`<li>✔️ ${s}</li>`).join('')}</ul>
-        </div>
-        <div class="result-section">
-            <h3>💪 개선할 점</h3>
-            <ul class="result-list">${data.weakness.map(w=>`<li>⚠️ ${w}</li>`).join('')}</ul>
-        </div>
+                <!-- 5순위: 강점 -->
+                <div class="result-section">
+                    <h3>💪 강점</h3>
+                    <p class="section-text" id="ms-str"></p>
+                </div>
 
-        <!-- 연애/직업/유명인 -->
-        <div class="result-section">
-            <h3>💕 연애 스타일</h3>
-            <p class="section-text">${data.love}</p>
-        </div>
-        <div class="result-section">
-            <h3>💼 추천 직업</h3>
-            <p class="section-text">${data.career}</p>
-        </div>
-        <div class="result-section">
-            <h3>🌟 나와 같은 유명인</h3>
-            <p class="famous-text">${data.famous}</p>
-        </div>
+                <!-- 6순위: 약점 -->
+                <div class="result-section">
+                    <h3>😅 약점</h3>
+                    <p class="section-text" id="ms-weak"></p>
+                </div>
 
-        <!-- 궁합 -->
-        <div class="compat">
-            <div class="compat-item good"><span>💚 잘 맞는 유형</span><strong>${data.good.join(', ')}</strong></div>
-            <div class="compat-item bad"><span>💔 불편한 유형</span><strong>${data.bad.join(', ')}</strong></div>
-        </div>
+                <!-- 7순위: 연애 스타일 -->
+                <div class="result-section">
+                    <h3>💕 연애 스타일</h3>
+                    <p class="section-text" id="ms-love"></p>
+                </div>
 
-        <!-- 공유 -->
-        <div class="share-section">
-            <h3>📤 친구에게 공유하기</h3>
-            <p class="share-sub">친구의 MBTI도 알아보세요!</p>
-            <button class="share-btn copy" onclick="copyLink()">🔗 링크 복사해서 공유하기</button>
-        </div>
-        <button class="btn-retry" onclick="location.href='index.html'">🔄 다시 테스트하기</button>
-    `;
+                <!-- 8순위: 추천 직업 -->
+                <div class="result-section">
+                    <h3>💼 추천 직업</h3>
+                    <p class="section-text" id="ms-job"></p>
+                </div>
 
-    function copyLink() {
-        navigator.clipboard.writeText('https://worldjin2173-lab.github.io/-mbti-site');
-        alert('링크가 복사됐어요! 친구에게 공유해보세요 😊');
-    }
-    </script>
+                <!-- 9순위: 같은 유형 유명인 -->
+                <div class="result-section">
+                    <h3>🌟 같은 유형의 유명인</h3>
+                    <p class="section-text" id="ms-famous"></p>
+                </div>
+
+                <!-- 10순위: 궁합 -->
+                <div class="result-section">
+                    <h3>🤝 궁합</h3>
+                    <p class="section-text" id="ms-compat"></p>
+                </div>
+
+                <!-- 다시 테스트 -->
+                <button class="btn-retry" onclick="msRetry()">🔄 다시 테스트하기</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/mbti.js"></script>
 </body>
 </html>
