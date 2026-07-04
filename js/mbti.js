@@ -375,4 +375,3 @@ function msRetry(){
   msShow('ms-start');
   window.scrollTo(0,0);
 }
-
