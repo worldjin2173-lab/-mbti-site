@@ -1,109 +1,154 @@
-    <!-- 결과 화면 -->
-    <div id="ms-result" class="ms-screen">
-        <div class="container" style="padding:0;overflow:hidden;">
-            <div id="ms-res-header" style="padding:30px 20px;text-align:center;color:white;">
-                <div id="ms-res-emoji" style="font-size:70px;margin-bottom:10px;"></div>
-                <div id="ms-res-type" style="font-size:48px;font-weight:900;"></div>
-                <div id="ms-res-name" style="font-size:22px;font-weight:700;margin-top:4px;opacity:0.9;"></div>
-            </div>
-            <div style="padding:24px 20px;">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔮 MBTI 유형 검사하기 - 나의 진짜 성격은?</title>
+<meta name="description" content="20가지 질문으로 알아보는 나의 MBTI 유형! 무료 성격 유형 검사">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-                <!-- 1. 유명인 -->
-                <div class="result-section">
-                    <h3>🌟 같은 유형의 유명인</h3>
-                    <p class="section-text" id="ms-famous"></p>
-                </div>
-
-                <!-- 2. 성격 설명 -->
-                <div class="result-section">
-                    <h3>✨ 성격 설명</h3>
-                    <p class="section-text" id="ms-desc"></p>
-                </div>
-
-                <!-- 3. 추천 아이템 -->
-                <div class="result-section">
-                    <h3>🛍️ 내 유형 추천 아이템</h3>
-                    <div id="ms-products" style="margin-top:12px;"></div>
-                    <p style="font-size:11px;color:#bbb;text-align:center;margin-top:8px;">
-                        이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-                    </p>
-                </div>
-
-                <!-- 4. 공유 버튼 -->
-                <div class="share-section">
-                    <h3>📢 친구에게 공유하기</h3>
-                    <p class="share-sub">친구의 MBTI도 알아보세요!</p>
-                    <button class="share-btn copy" onclick="msShare()">🔗 링크 복사하기</button>
-                </div>
-
-                <!-- 5. 성향 비율 -->
-                <div class="result-section">
-                    <h3>📊 나의 성향 비율</h3>
-                    <div style="margin-top:10px;">
-                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
-                            <span id="lbl-e"></span><span id="lbl-i"></span>
-                        </div>
-                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
-                            <div id="bar-e" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
-                            <span id="lbl-n"></span><span id="lbl-s"></span>
-                        </div>
-                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
-                            <div id="bar-n" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
-                            <span id="lbl-t"></span><span id="lbl-f"></span>
-                        </div>
-                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
-                            <div id="bar-t" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
-                            <span id="lbl-p"></span><span id="lbl-j"></span>
-                        </div>
-                        <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
-                            <div id="bar-p" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 6. 강점 -->
-                <div class="result-section">
-                    <h3>💪 강점</h3>
-                    <p class="section-text" id="ms-str"></p>
-                </div>
-
-                <!-- 7. 약점 -->
-                <div class="result-section">
-                    <h3>😅 약점</h3>
-                    <p class="section-text" id="ms-weak"></p>
-                </div>
-
-                <!-- 8. 연애 스타일 -->
-                <div class="result-section">
-                    <h3>💕 연애 스타일</h3>
-                    <p class="section-text" id="ms-love"></p>
-                </div>
-
-                <!-- 9. 추천 직업 -->
-                <div class="result-section">
-                    <h3>💼 추천 직업</h3>
-                    <p class="section-text" id="ms-job"></p>
-                </div>
-
-                <!-- 10. 궁합 -->
-                <div class="result-section">
-                    <h3>🤝 궁합</h3>
-                    <p class="section-text" id="ms-compat"></p>
-                </div>
-
-                <!-- 11. 다시하기 (1개만!) -->
-                <button class="btn-retry" onclick="msRetry()">🔄 다시 테스트하기</button>
-
-            </div>
-        </div>
+<!-- 시작 화면 -->
+<div id="ms-start" class="ms-screen active">
+  <div class="container">
+    <div style="text-align:center;padding:40px 20px;">
+      <div style="font-size:80px;margin-bottom:16px;">🔮</div>
+      <h1 style="font-size:26px;font-weight:900;color:#333;margin-bottom:8px;">나의 MBTI는?</h1>
+      <p style="color:#666;font-size:15px;margin-bottom:8px;">20가지 질문으로 알아보는 진짜 성격 유형</p>
+      <p style="color:#999;font-size:13px;margin-bottom:32px;">👥 누적 참여 1,284,927명</p>
+      <button class="btn-start" onclick="msStart()">✨ 테스트 시작하기</button>
     </div>
+  </div>
+</div>
 
-    <script src="js/mbti.js"></script>
+<!-- 테스트 화면 -->
+<div id="ms-test" class="ms-screen">
+  <div class="container">
+    <div style="padding:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span id="ms-prog-txt" style="font-size:13px;color:#666;"></span>
+        <span id="ms-prog-pct" style="font-size:13px;color:#764ba2;font-weight:700;"></span>
+      </div>
+      <div style="background:#eee;border-radius:10px;height:8px;margin-bottom:24px;">
+        <div id="ms-prog-fill" style="background:linear-gradient(135deg,#667eea,#764ba2);height:8px;border-radius:10px;transition:width 0.4s;width:0%;"></div>
+      </div>
+      <div style="text-align:center;margin-bottom:24px;">
+        <div id="ms-q-emoji" style="font-size:50px;margin-bottom:12px;"></div>
+        <p id="ms-q-text" style="font-size:18px;font-weight:700;color:#333;line-height:1.5;"></p>
+      </div>
+      <button id="ms-btn-a" class="btn-answer" onclick="msAnswer('a')"></button>
+      <button id="ms-btn-b" class="btn-answer" onclick="msAnswer('b')"></button>
+    </div>
+  </div>
+</div>
+
+<!-- 로딩 화면 -->
+<div id="ms-loading" class="ms-screen">
+  <div class="container">
+    <div style="text-align:center;padding:60px 20px;">
+      <div style="font-size:60px;margin-bottom:20px;">🔮</div>
+      <p style="font-size:18px;font-weight:700;color:#333;margin-bottom:20px;">분석 중...</p>
+      <div style="background:#eee;border-radius:10px;height:10px;">
+        <div id="ms-load-fill" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 0.1s;width:0%;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 결과 화면 -->
+<div id="ms-result" class="ms-screen">
+  <div class="container" style="padding:0;overflow:hidden;">
+    <div id="ms-res-header" style="padding:30px 20px;text-align:center;color:white;">
+      <div id="ms-res-emoji" style="font-size:70px;margin-bottom:10px;"></div>
+      <div id="ms-res-type" style="font-size:48px;font-weight:900;"></div>
+      <div id="ms-res-name" style="font-size:22px;font-weight:700;margin-top:4px;opacity:0.9;"></div>
+    </div>
+    <div style="padding:24px 20px;">
+
+      <div class="result-section">
+        <h3>🌟 같은 유형의 유명인</h3>
+        <p class="section-text" id="ms-famous"></p>
+      </div>
+
+      <div class="result-section">
+        <h3>✨ 성격 설명</h3>
+        <p class="section-text" id="ms-desc"></p>
+      </div>
+
+      <div class="result-section">
+        <h3>🛍️ 내 유형 추천 아이템</h3>
+        <div id="ms-products" style="margin-top:12px;"></div>
+        <p style="font-size:11px;color:#bbb;text-align:center;margin-top:8px;">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+      </div>
+
+      <div class="share-section">
+        <h3>📢 친구에게 공유하기</h3>
+        <p class="share-sub">친구의 MBTI도 알아보세요!</p>
+        <button class="share-btn copy" onclick="msShare()">🔗 링크 복사하기</button>
+      </div>
+
+      <div class="result-section">
+        <h3>📊 나의 성향 비율</h3>
+        <div style="margin-top:10px;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span id="lbl-e"></span><span id="lbl-i"></span>
+          </div>
+          <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+            <div id="bar-e" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span id="lbl-n"></span><span id="lbl-s"></span>
+          </div>
+          <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+            <div id="bar-n" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span id="lbl-t"></span><span id="lbl-f"></span>
+          </div>
+          <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+            <div id="bar-t" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span id="lbl-p"></span><span id="lbl-j"></span>
+          </div>
+          <div style="background:#eee;border-radius:10px;height:10px;margin-bottom:12px;">
+            <div id="bar-p" style="background:linear-gradient(135deg,#667eea,#764ba2);height:10px;border-radius:10px;transition:width 1s;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <h3>💪 강점</h3>
+        <p class="section-text" id="ms-str"></p>
+      </div>
+
+      <div class="result-section">
+        <h3>😅 약점</h3>
+        <p class="section-text" id="ms-weak"></p>
+      </div>
+
+      <div class="result-section">
+        <h3>💕 연애 스타일</h3>
+        <p class="section-text" id="ms-love"></p>
+      </div>
+
+      <div class="result-section">
+        <h3>💼 추천 직업</h3>
+        <p class="section-text" id="ms-job"></p>
+      </div>
+
+      <div class="result-section">
+        <h3>🤝 궁합</h3>
+        <p class="section-text" id="ms-compat"></p>
+      </div>
+
+      <button class="btn-retry" onclick="msRetry()">🔄 다시 테스트하기</button>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/mbti.js"></script>
 </body>
 </html>
