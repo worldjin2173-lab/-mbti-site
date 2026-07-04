@@ -1,89 +1,51 @@
-// MBTI 질문 배열 (20문제)
-const questions = [
-    {emoji:"🎉", text:"주말에 친구들과 파티가 생겼다!", a:"신나서 바로 참석한다", b:"집에서 쉬고 싶은데...", type:"EI"},
-    {emoji:"💭", text:"새로운 아이디어를 떠올릴 때 나는?", a:"현실적으로 가능한 것부터 생각한다", b:"상상력을 마음껏 펼친다", type:"SN"},
-    {emoji:"⚖️", text:"친구가 고민을 털어놓을 때 나는?", a:"해결책을 먼저 제시한다", b:"공감하고 감정을 들어준다", type:"TF"},
-    {emoji:"📅", text:"여행 계획을 세울 때 나는?", a:"꼼꼼하게 일정을 짠다", b:"즉흥적으로 떠난다", type:"JP"},
-    {emoji:"📞", text:"모르는 번호로 전화가 왔을 때?", a:"바로 받는다", b:"문자로 먼저 확인한다", type:"EI"},
-    {emoji:"🎨", text:"취미 활동을 고를 때 나는?", a:"실용적이고 배울 수 있는 것", b:"창의적이고 상상력이 필요한 것", type:"SN"},
-    {emoji:"😤", text:"친구가 잘못했을 때 나는?", a:"직접적으로 말해준다", b:"감정을 다치지 않게 돌려 말한다", type:"TF"},
-    {emoji:"🗂️", text:"과제나 업무를 할 때 나는?", a:"미리미리 계획하고 끝낸다", b:"마감 직전에 집중해서 한다", type:"JP"},
-    {emoji:"🏫", text:"처음 만나는 자리에서 나는?", a:"먼저 말을 걸고 분위기를 띄운다", b:"조용히 관찰하다가 친해진다", type:"EI"},
-    {emoji:"🔍", text:"정보를 받아들일 때 나는?", a:"사실과 세부사항을 중시한다", b:"전체적인 패턴과 가능성을 본다", type:"SN"},
-    {emoji:"🤝", text:"팀 프로젝트에서 갈등이 생기면?", a:"논리적으로 문제를 분석한다", b:"팀원의 감정을 먼저 챙긴다", type:"TF"},
-    {emoji:"🛒", text:"쇼핑할 때 나는?", a:"살 것을 미리 정해두고 간다", b:"구경하다가 마음에 드는 걸 산다", type:"JP"},
-    {emoji:"🎤", text:"발표나 공연 전날 나는?", a:"설레고 기대된다", b:"긴장되고 피하고 싶다", type:"EI"},
-    {emoji:"📖", text:"책을 읽을 때 나는?", a:"실용서나 정보성 책을 선호한다", b:"소설이나 판타지 같은 상상력 책을 선호한다", type:"SN"},
-    {emoji:"💔", text:"누군가 나를 비판했을 때 나는?", a:"틀린 부분이 있으면 인정한다", b:"상처를 받고 오래 생각한다", type:"TF"},
-    {emoji:"⏰", text:"약속 시간에 대해 나는?", a:"항상 일찍 도착한다", b:"딱 맞춰 오거나 조금 늦는다", type:"JP"},
-    {emoji:"🌙", text:"혼자 있는 시간이?", a:"에너지를 소모하는 느낌", b:"에너지를 충전하는 느낌", type:"EI"},
-    {emoji:"🌟", text:"미래에 대해 생각할 때 나는?", a:"현실적인 계획을 세운다", b:"꿈꾸고 상상하는 걸 즐긴다", type:"SN"},
-    {emoji:"🧩", text:"문제를 해결할 때 나는?", a:"객관적인 사실을 바탕으로 판단한다", b:"나의 느낌과 가치관을 중요시한다", type:"TF"},
-    {emoji:"🌈", text:"하루 일과가 끝난 후 나는?", a:"내일 할 일을 미리 정리한다", b:"그냥 자연스럽게 흘러가도록 둔다", type:"JP"}
+var msQ=[
+{emoji:"🎉",text:"주말에 친구들과 파티가 생겼다!",a:"신나서 바로 참석한다",b:"집에서 쉬고 싶은데...",type:"EI"},
+{emoji:"💭",text:"새로운 아이디어를 떠올릴 때 나는?",a:"현실적으로 가능한 것부터 생각한다",b:"상상력을 마음껏 펼친다",type:"SN"},
+{emoji:"⚖️",text:"친구가 고민을 털어놓을 때 나는?",a:"해결책을 먼저 제시한다",b:"공감하고 감정을 들어준다",type:"TF"},
+{emoji:"📅",text:"여행 계획을 세울 때 나는?",a:"꼼꼼하게 일정을 짠다",b:"즉흥적으로 떠난다",type:"JP"},
+{emoji:"📞",text:"모르는 번호로 전화가 왔을 때?",a:"바로 받는다",b:"문자로 먼저 확인한다",type:"EI"},
+{emoji:"🎨",text:"취미 활동을 고를 때 나는?",a:"실용적이고 배울 수 있는 것",b:"창의적이고 상상력이 필요한 것",type:"SN"},
+{emoji:"😤",text:"친구가 잘못했을 때 나는?",a:"직접적으로 말해준다",b:"감정을 다치지 않게 돌려 말한다",type:"TF"},
+{emoji:"🗂️",text:"과제나 업무를 할 때 나는?",a:"미리미리 계획하고 끝낸다",b:"마감 직전에 집중해서 한다",type:"JP"},
+{emoji:"🏫",text:"처음 만나는 자리에서 나는?",a:"먼저 말을 걸고 분위기를 띄운다",b:"조용히 관찰하다가 친해진다",type:"EI"},
+{emoji:"🔍",text:"정보를 받아들일 때 나는?",a:"사실과 세부사항을 중시한다",b:"전체적인 패턴과 가능성을 본다",type:"SN"},
+{emoji:"🤝",text:"팀 프로젝트에서 갈등이 생기면?",a:"논리적으로 문제를 분석한다",b:"팀원의 감정을 먼저 챙긴다",type:"TF"},
+{emoji:"🛒",text:"쇼핑할 때 나는?",a:"살 것을 미리 정해두고 간다",b:"구경하다가 마음에 드는 걸 산다",type:"JP"},
+{emoji:"🎤",text:"발표나 공연 전날 나는?",a:"설레고 기대된다",b:"긴장되고 피하고 싶다",type:"EI"},
+{emoji:"📖",text:"책을 읽을 때 나는?",a:"실용서나 정보성 책을 선호한다",b:"소설이나 판타지 같은 상상력 책을 선호한다",type:"SN"},
+{emoji:"💔",text:"누군가 나를 비판했을 때 나는?",a:"틀린 부분이 있으면 인정한다",b:"상처를 받고 오래 생각한다",type:"TF"},
+{emoji:"⏰",text:"약속 시간에 대해 나는?",a:"항상 일찍 도착한다",b:"딱 맞춰 오거나 조금 늦는다",type:"JP"},
+{emoji:"🌙",text:"혼자 있는 시간이?",a:"에너지를 소모하는 느낌",b:"에너지를 충전하는 느낌",type:"EI"},
+{emoji:"🌟",text:"미래에 대해 생각할 때 나는?",a:"현실적인 계획을 세운다",b:"꿈꾸고 상상하는 걸 즐긴다",type:"SN"},
+{emoji:"🧩",text:"문제를 해결할 때 나는?",a:"객관적인 사실을 바탕으로 판단한다",b:"나의 느낌과 가치관을 중요시한다",type:"TF"},
+{emoji:"🌈",text:"하루 일과가 끝난 후 나는?",a:"내일 할 일을 미리 정리한다",b:"그냥 자연스럽게 흘러가도록 둔다",type:"JP"}
 ];
 
-let currentQ = 0;
-let scores = {E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0};
+var msData={
+INTJ:{emoji:"🏰",name:"전략가",color:"#2c3e50",desc:"독창적이고 결단력 있는 전략가. 항상 계획을 세우고 실행하는 의지를 갖고 있어요.",str:"전략적 사고, 독립심, 결단력",weak:"완벽주의, 감정 표현 어려움",love:"깊이 있는 대화를 나누는 파트너를 원해요",job:"과학자, 엔지니어, 전략기획자",compat:"ENFP, ENTP와 잘 맞아요",products:[{icon:"📚",name:"자기계발 플래너",sub:"목표 달성을 위한 다이어리",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🎧",name:"노이즈캔슬링 이어폰",sub:"집중력 향상 필수템",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"💻",name:"스탠딩 데스크",sub:"효율적인 업무 환경",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+INTP:{emoji:"🔬",name:"논리술사",color:"#8e44ad",desc:"사색적이고 원칙에 충실한 철학자. 논리와 아이디어의 세계에서 살아가요.",str:"분석력, 창의성, 객관성",weak:"우유부단함, 감정 무시",love:"지적 자극을 주는 파트너가 필요해요",job:"프로그래머, 철학자, 수학자",compat:"ENTJ, ENFJ와 잘 맞아요",products:[{icon:"📖",name:"철학·과학 도서",sub:"지적 호기심을 채우는 책",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🖥️",name:"듀얼 모니터",sub:"생산성 극대화",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"☕",name:"핸드드립 커피",sub:"사색하며 즐기는 커피",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ENTJ:{emoji:"👑",name:"통솔자",color:"#c0392b",desc:"대담하고 의지력 강한 리더. 항상 방법을 찾아내거나 만들어내는 타입이에요.",str:"리더십, 자신감, 결단력",weak:"완고함, 타인 감정 무시",love:"야망 있고 독립적인 파트너를 원해요",job:"CEO, 변호사, 정치인",compat:"INTP, INFP와 잘 맞아요",products:[{icon:"⌚",name:"스마트워치",sub:"시간 관리 필수템",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"💼",name:"프리미엄 서류가방",sub:"리더의 품격",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📱",name:"아이패드 거치대",sub:"효율적인 업무 환경",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ENTP:{emoji:"⚡",name:"변론가",color:"#e67e22",desc:"똑똑하고 호기심 많은 사상가. 어떤 도전도 마다하지 않아요.",str:"창의성, 논쟁력, 적응력",weak:"논쟁적, 집중력 부족",love:"지적으로 도전적인 파트너를 원해요",job:"기업가, 발명가, 마케터",compat:"INFJ, INTJ와 잘 맞아요",products:[{icon:"🎮",name:"최신 게임기",sub:"새로운 세계 탐험",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📡",name:"스마트홈 기기",sub:"혁신적인 생활",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🚀",name:"드론",sub:"창의적 취미",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+INFJ:{emoji:"🌙",name:"옹호자",color:"#27ae60",desc:"조용하고 신비로운 이상주의자. 지칠 줄 모르는 이상을 품고 있어요.",str:"통찰력, 공감능력, 결단력",weak:"완벽주의, 소진되기 쉬움",love:"깊고 의미 있는 관계를 원해요",job:"상담사, 작가, 의사",compat:"ENFP, ENTP와 잘 맞아요",products:[{icon:"🕯️",name:"아로마 캔들",sub:"힐링 감성 아이템",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📔",name:"감성 일기장",sub:"내면의 생각 기록",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🎵",name:"블루투스 스피커",sub:"감성 음악 감상",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+INFP:{emoji:"🌸",name:"중재자",color:"#16a085",desc:"시적이고 친절한 이타주의자. 선한 대의를 위해 항상 노력해요.",str:"공감능력, 창의성, 열정",weak:"비현실적, 감정에 치우침",love:"진실하고 깊은 감정적 연결을 원해요",job:"작가, 예술가, 심리상담사",compat:"ENFJ, ENTJ와 잘 맞아요",products:[{icon:"🎨",name:"수채화 물감",sub:"감성을 표현하는 도구",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📚",name:"감성 소설",sub:"마음을 울리는 이야기",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🌿",name:"미니 화분",sub:"생명을 돌보는 힐링",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ENFJ:{emoji:"🌟",name:"선도자",color:"#d35400",desc:"카리스마 있고 고무적인 리더. 청중을 매료시켜요.",str:"공감능력, 리더십, 열정",weak:"지나친 이타심, 자기비판",love:"감정적으로 지지해주는 파트너를 원해요",job:"교사, 코치, 정치인",compat:"INFP, ISFP와 잘 맞아요",products:[{icon:"🎤",name:"유선 마이크",sub:"나의 목소리를 세상에",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📸",name:"즉석 카메라",sub:"소중한 순간을 담아요",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"👗",name:"포인트 액세서리",sub:"나를 표현하는 패션",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ENFP:{emoji:"🦋",name:"활동가",color:"#e74c3c",desc:"열정적이고 창의적인 자유로운 영혼. 항상 웃을 이유를 찾아요.",str:"열정, 창의성, 사교성",weak:"집중력 부족, 감정 기복",love:"감정적으로 깊이 연결되고 싶어해요",job:"기자, 배우, 코치",compat:"INTJ, INFJ와 잘 맞아요",products:[{icon:"🎡",name:"여행용 캐리어",sub:"새로운 곳으로 떠나요",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📷",name:"미러리스 카메라",sub:"순간을 포착",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🎪",name:"보드게임",sub:"친구들과 즐겨요",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ISTJ:{emoji:"🏛️",name:"현실주의자",color:"#2980b9",desc:"신뢰할 수 있고 실용적인 사실주의자. 약속을 절대 어기지 않아요.",str:"책임감, 신뢰성, 꼼꼼함",weak:"완고함, 변화 거부",love:"안정적이고 헌신적인 관계를 원해요",job:"회계사, 군인, 판사",compat:"ESFP, ESTP와 잘 맞아요",products:[{icon:"🗓️",name:"올인원 플래너",sub:"완벽한 일정 관리",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🔧",name:"멀티툴 세트",sub:"실용적인 도구",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"👔",name:"클래식 시계",sub:"믿음직한 이미지",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ISFJ:{emoji:"🛡️",name:"수호자",color:"#27ae60",desc:"따뜻하고 헌신적인 보호자. 사랑하는 사람을 위해 항상 준비되어 있어요.",str:"헌신, 따뜻함, 꼼꼼함",weak:"자기주장 약함, 변화 거부",love:"안정적이고 헌신적인 관계를 원해요",job:"간호사, 교사, 사회복지사",compat:"ESFP, ESTP와 잘 맞아요",products:[{icon:"🧸",name:"아로마 디퓨저",sub:"집을 편안하게",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🍳",name:"프리미엄 주방용품",sub:"요리로 사랑 표현",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📱",name:"스마트 포토 프레임",sub:"소중한 추억 간직",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ESTJ:{emoji:"⚖️",name:"경영자",color:"#c0392b",desc:"뛰어난 관리자. 사물이나 사람을 관리하는 능력이 탁월해요.",str:"리더십, 책임감, 효율성",weak:"완고함, 감정 무시",love:"전통적이고 안정적인 관계를 원해요",job:"관리자, 판사, 금융전문가",compat:"ISFP, ISTP와 잘 맞아요",products:[{icon:"💼",name:"비즈니스 백팩",sub:"프로페셔널한 이미지",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📊",name:"태블릿PC",sub:"효율적인 업무 관리",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"⌚",name:"클래식 손목시계",sub:"신뢰감 아이템",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ESFJ:{emoji:"🤗",name:"집정관",color:"#e67e22",desc:"배려심 깊고 사교적인 사람. 인기 있고 섬세한 타입이에요.",str:"배려심, 사교성, 책임감",weak:"타인 의견에 민감, 갈등 회피",love:"조화롭고 헌신적인 관계를 원해요",job:"교사, 의료진, 사회복지사",compat:"ISFP, ISTP와 잘 맞아요",products:[{icon:"🎁",name:"프리미엄 선물세트",sub:"소중한 사람에게",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"💄",name:"뷰티 케어 세트",sub:"나를 가꾸는 즐거움",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"☕",name:"감성 머그컵",sub:"따뜻한 관계",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ISTP:{emoji:"🔩",name:"장인",color:"#7f8c8d",desc:"대담하고 현실적인 실험가. 온갖 도구를 다룰 줄 알아요.",str:"분석력, 실용성, 위기 대처",weak:"감정 표현 어려움, 충동적",love:"자유롭고 독립적인 관계를 원해요",job:"엔지니어, 파일럿, 외과의사",compat:"ESFJ, ESTJ와 잘 맞아요",products:[{icon:"🔨",name:"멀티 공구 세트",sub:"뭐든 고칠 수 있어요",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🏍️",name:"액션캠",sub:"익스트림 순간 포착",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🎯",name:"다트 게임",sub:"집중력 향상 취미",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ISFP:{emoji:"🎭",name:"모험가",color:"#1abc9c",desc:"유연하고 매력적인 예술가. 항상 새로운 것을 탐험할 준비가 되어 있어요.",str:"예술성, 공감능력, 유연성",weak:"자기주장 약함, 계획 부재",love:"진실하고 자유로운 관계를 원해요",job:"예술가, 음악가, 디자이너",compat:"ENFJ, ESFJ와 잘 맞아요",products:[{icon:"🎸",name:"우쿨렐레",sub:"나만의 음악",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🖌️",name:"아크릴 물감",sub:"감성을 색으로",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🌿",name:"테라리움 키트",sub:"자연을 곁에",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ESTP:{emoji:"🌪️",name:"사업가",color:"#e74c3c",desc:"활동적이고 현명한 지각가. 위험을 무릅쓰고 도전하는 타입이에요.",str:"행동력, 적응력, 현실감각",weak:"충동적, 장기계획 부재",love:"흥미롭고 역동적인 관계를 원해요",job:"기업가, 영업직, 소방관",compat:"ISFJ, ISTJ와 잘 맞아요",products:[{icon:"⚽",name:"스포츠 용품",sub:"에너지 넘치는 운동",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🏄",name:"야외 활동 장비",sub:"자연 속 도전",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"🎽",name:"기능성 운동복",sub:"스타일리시한 운동",url:"https://link.coupang.com/a/e6pbm4Zb08"}]},
+ESFP:{emoji:"🎪",name:"연예인",color:"#f39c12",desc:"즉흥적이고 열정적인 연예인. 삶이 결코 지루하지 않아요.",str:"사교성, 유머, 열정",weak:"집중력 부족, 갈등 회피",love:"즐겁고 활기찬 관계를 원해요",job:"배우, 이벤트 플래너, 여행가이드",compat:"ISFJ, ISTJ와 잘 맞아요",products:[{icon:"🎤",name:"노래방 마이크",sub:"어디서든 파티",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"💃",name:"댄스 운동복",sub:"끼 발산",url:"https://link.coupang.com/a/e6pbm4Zb08"},{icon:"📸",name:"셀카봉+삼각대",sub:"인생샷",url:"https://link.coupang.com/a/e6pbm4Zb08"}]}
+};
 
-function startTest() {
-    currentQ = 0;
-    scores = {E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0};
-    document.getElementById('start-screen').classList.remove('active');
-    document.getElementById('test-screen').classList.add('active');
-    showQuestion();
-}
-
-function showQuestion() {
-    const q = questions[currentQ];
-    document.getElementById('q-emoji').textContent = q.emoji;
-    document.getElementById('question-text').textContent = q.text;
-    document.getElementById('btn-a').textContent = q.a;
-    document.getElementById('btn-b').textContent = q.b;
-    const num = currentQ + 1;
-    const total = questions.length;
-    const pct = Math.round((currentQ / total) * 100);
-    document.getElementById('progress-text').textContent = `${num} / ${total}`;
-    document.getElementById('progress-pct').textContent = pct + '%';
-    document.getElementById('progress-fill').style.width = pct + '%';
-}
-
-function answer(choice) {
-    const q = questions[currentQ];
-    const type = q.type;
-    if (choice === 'a') {
-        scores[type[0]]++;
-    } else {
-        scores[type[1]]++;
-    }
-    currentQ++;
-    if (currentQ < questions.length) {
-        showQuestion();
-    } else {
-        showLoading();
-    }
-}
-
-function showLoading() {
-    document.getElementById('test-screen').classList.remove('active');
-    document.getElementById('loading-screen').classList.add('active');
-    let width = 0;
-    const interval = setInterval(() => {
-        width += 2;
-        document.getElementById('loading-fill').style.width = width + '%';
-        if (width >= 100) {
-            clearInterval(interval);
-            goToResult();
-        }
-    }, 30);
-}
-
-function goToResult() {
-    const mbti =
-        (scores.E >= scores.I ? 'E' : 'I') +
-        (scores.S >= scores.N ? 'S' : 'N') +
-        (scores.T >= scores.F ? 'T' : 'F') +
-        (scores.J >= scores.P ? 'J' : 'P');
-
-    const params = `type=${mbti}&E=${scores.E}&I=${scores.I}&S=${scores.S}&N=${scores.N}&T=${scores.T}&F=${scores.F}&J=${scores.J}&P=${scores.P}`;
-    window.location.href = `result.html?${params}`;
-}
+var msCur=0,msScores={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+function msShow(id){document.querySelectorAll(".ms-screen").forEach(function(s){s.classList.remove("active");});document.getElementById(id).classList.add("active");window.scrollTo(0,0);}
+function msStart(){msCur=0;msScores={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};msShowQ();msShow("ms-test");}
+function msShowQ(){var q=msQ[msCur];document.getElementById("ms-q-emoji").innerText=q.emoji;document.getElementById("ms-q-text").innerText=q.text;document.getElementById("ms-btn-a").innerText=q.a;document.getElementById("ms-btn-b").innerText=q.b;var pct=Math.round((msCur/msQ.length)*100);document.getElementById("ms-prog-txt").innerText=(msCur+1)+" / "+msQ.length;document.getElementById("ms-prog-pct").innerText=pct+"%";document.getElementById("ms-prog-fill").style.width=pct+"%";}
+function msAnswer(ch){var q=msQ[msCur],t=q.type;if(t==="EI"){if(ch==="a")msScores.E++;else msScores.I++;}else if(t==="SN"){if(ch==="a")msScores.S++;else msScores.N++;}else if(t==="TF"){if(ch==="a")msScores.T++;else msScores.F++;}else if(t==="JP"){if(ch==="a")msScores.J++;else msScores.P++;}msCur++;if(msCur>=msQ.length){msShowLoading();}else{msShowQ();}}
+function msShowLoading(){msShow("ms-loading");var fill=document.getElementById("ms-load-fill"),w=0;var timer=setInterval(function(){w+=2;fill.style.width=w+"%";if(w>=100){clearInterval(timer);msShowResult();}},30);}
+function msShowResult(){var s=msScores;var type=(s.E>=s.I?"E":"I")+(s.S>=s.N?"S":"N")+(s.T>=s.F?"T":"F")+(s.J>=s.P?"J":"P");var d=msData[type];var tEI=s.E+s.I||1,tSN=s.S+s.N||1,tTF=s.T+s.F||1,tJP=s.J+s.P||1;var pE=Math.round(s.E/tEI*100),pI=100-pE,pN=Math.round(s.N/tSN*100),pS=100-pN,pT=Math.round(s.T/tTF*100),pF=100-pT,pP=Math.round(s.P/tJP*100),pJ=100-pP;document.getElementById("ms-res-header").style.background="linear-gradient(135deg,"+d.color+",#764ba2)";document.getElementById("ms-res-emoji").innerText=d.emoji;document.getElementById("ms-res-type").innerText=type;document.getElementById("ms-res-name").innerText=d.name;document.getElementById("lbl-e").innerText="E 외향 "+pE+"%";document.getElementById("lbl-i").innerText="I 내향 "+pI+"%";document.getElementById("bar-e").style.width=pE+"%";document.getElementById("lbl-n").innerText="N 직관 "+pN+"%";document.getElementById("lbl-s").innerText="S 감각 "+pS+"%";document.getElementById("bar-n").style.width=pN+"%";document.getElementById("lbl-t").innerText="T 사고 "+pT+"%";document.getElementById("lbl-f").innerText="F 감정 "+pF+"%";document.getElementById("bar-t").style.width=pT+"%";document.getElementById("lbl-p").innerText="P 인식 "+pP+"%";document.getElementById("lbl-j").innerText="J 판단 "+pJ+"%";document.getElementById("bar-p").style.width=pP+"%";document.getElementById("ms-desc").innerText=d.desc;document.getElementById("ms-str").innerText=d.str;document.getElementById("ms-weak").innerText=d.weak;document.getElementById("ms-love").innerText=d.love;document.getElementById("ms-job").innerText=d.job;document.getElementById("ms-compat").innerText=d.compat;var ph=document.getElementById("ms-products");ph.innerHTML="";d.products.forEach(function(p){ph.innerHTML+="<a href="+p.url+" target=_blank rel=noopener class=ms-prod-card><span class=ms-prod-icon>"+p.icon+"</span><div class=ms-prod-info><div class=ms-prod-name>"+p.name+"</div><div class=ms-prod-sub>"+p.sub+"</div></div><span class=ms-prod-btn>쿠팡 보기 →</span></a>";});msShow("ms-result");}
+function msShare(){var url=window.location.href;if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){alert("링크가 복사되었어요!\n카카오톡에 붙여넣기 하세요 😊");});}else{prompt("이 링크를 복사하세요:",url);}}
+function msRetry(){msStart();}
